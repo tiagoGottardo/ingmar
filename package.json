@@ -1,0 +1,12 @@
+{
+  "name": "ingmar",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev:server": "java apps/server/src/Main.java",
+    "dev:client": "echo 'client not implemented yet'",
+    "dev:cli": "java apps/cli/src/Main.java"
+  },
+  "author": "tiagoGottardo",
+  "packageManager": "pnpm@10.12.1"
+}
