@@ -1,29 +1,26 @@
-plugins {   
+plugins {
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 repositories {
     mavenCentral()
 }
 
-dependencies {  
-    // testImplementation libs.junit.jupiter
-
-    // testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    // implementation libs.guava
-}
-
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
-application {   
+application {
     mainClass = 'Main'
 }
 
-// tasks.named('test') {
-//     useJUnitPlatform()
-// }
+javafx {
+    version = "21"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+dependencies {
+}
