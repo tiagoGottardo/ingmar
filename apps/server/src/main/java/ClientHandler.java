@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import java.util.HashMap;
 
 class ClientHandler extends Thread {
   private Socket socket;
@@ -15,6 +16,9 @@ class ClientHandler extends Thread {
   }
 
   public void run() {
+    HashMap<String, Operation> operations = new HashMap<>();
+    operations.put("CRIAR_USUARIO", new CreateUser());
+
     try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
        
@@ -33,7 +37,8 @@ class ClientHandler extends Thread {
 
           if (operation == null) throw new Error("There is no operation!");
 
-          out.println("{ \"status\": \"201\" }");
+
+          out.println(operations.get(operation).run());
         } catch (IOException e) {
           out.println("{ \"status\": \"400\" }");
           e.printStackTrace();
