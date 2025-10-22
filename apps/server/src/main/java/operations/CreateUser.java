@@ -1,10 +1,20 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 class CreateUser implements Operation {
-  CreateUser() { }
-
   @Override
-  public String run() {
+  public String run(String rawJson) {
+    System.out.println(rawJson);
 
-    System.out.println("I am inside create user class!");
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    try {
+      CreateUserDTO req = objectMapper.readValue(rawJson, CreateUserDTO.class);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+      return "{ \"status\": \"400\" }";
+    }
 
     return "{ \"status\": \"201\" }";
   }
