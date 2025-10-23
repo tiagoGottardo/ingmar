@@ -1,3 +1,3 @@
 public interface Operation {
-  String run();
+  String run(String rawJson);
 }
