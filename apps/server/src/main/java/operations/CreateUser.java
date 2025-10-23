@@ -6,10 +6,9 @@ import java.io.IOException;
 import org.mindrot.jbcrypt.BCrypt;
 
 class CreateUser implements Operation {
+
   @Override
   public String run(String rawJson) {
-    System.out.println(rawJson);
-
     ObjectMapper objectMapper = new ObjectMapper();
 
     try {
@@ -17,20 +16,18 @@ class CreateUser implements Operation {
 
       String hashedPassword = BCrypt.hashpw(req.usuario.senha, BCrypt.gensalt());
 
-      try {
-        Connection conn = Database.getInstance().getConnection();
+      try (Connection conn = Database.getInstance().getConnection()) {
 
-        String sql = "INSERT INTO users (name, password) VALUES (?, ?)";
-
-        PreparedStatement pstmt = conn.prepareStatement(sql);
+        PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users (name, password) VALUES (?, ?)");
 
         pstmt.setString(1, req.usuario.nome);
         pstmt.setString(2, hashedPassword);
 
         pstmt.executeUpdate();
 
-        conn.close();
       } catch(SQLException e) {
+        if (e.getSQLState().equals("23505")) return "{ \"status\": \"409\", \"message\": \"User already exists.\" }";
+
         e.printStackTrace();
         return "{ \"status\": \"500\" }";
       }
