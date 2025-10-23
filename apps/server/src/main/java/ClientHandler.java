@@ -18,13 +18,13 @@ class ClientHandler extends Thread {
   public void run() {
     HashMap<String, Operation> operations = new HashMap<>();
     operations.put("CRIAR_USUARIO", new CreateUser());
+    operations.put("LOGIN", new Login());
 
     try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
        
       String received;
       while ((received = in.readLine()) != null) {
-        System.out.println(received);
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -32,8 +32,6 @@ class ClientHandler extends Thread {
 
             
           String operation = jsonNode.get("operacao").asText();
-
-          System.out.println("The operation is " + operation);
 
           if (operation == null) throw new Error("There is no operation!");
 
