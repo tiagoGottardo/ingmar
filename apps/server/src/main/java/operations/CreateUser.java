@@ -1,3 +1,5 @@
+import java.sql.Connection;
+import java.sql.SQLException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
@@ -10,6 +12,15 @@ class CreateUser implements Operation {
 
     try {
       CreateUserDTO req = objectMapper.readValue(rawJson, CreateUserDTO.class);
+
+      try {
+        Connection conn = Database.getInstance().getConnection();
+      
+
+      } catch(SQLException e) {
+        e.printStackTrace();
+      }
+
 
     } catch (IOException e) {
       e.printStackTrace();

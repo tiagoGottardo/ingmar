@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,7 +23,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import java.io.IOException;
-
 
 public class Main extends Application {
 
