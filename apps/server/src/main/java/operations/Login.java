@@ -5,8 +5,11 @@ import java.sql.ResultSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.mindrot.jbcrypt.BCrypt;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-class Login implements Operation {
+public class Login implements Operation {
   @Override
   public String run(String rawJson) {
     ObjectMapper objectMapper = new ObjectMapper();
@@ -23,24 +26,37 @@ class Login implements Operation {
 
         try (ResultSet rs = pstmt.executeQuery()) {
 
-          if (!rs.next()) return "{ \"status\": \"401\" }";
+          if (!rs.next()) return Failed.response(401);
 
           String id = rs.getString("id");
           String hashedPassword = rs.getString("password");
 
-          if (!BCrypt.checkpw(req.senha, hashedPassword)) return "{ \"status\": \"401\" }";
+          if (!BCrypt.checkpw(req.senha, hashedPassword)) return Failed.response(401); 
 
-          return "{ \"status\": \"200\", \"token\": \"" + JWTUtil.generateToken(id) + "\" }";
+          return new Success(JWTUtil.generateToken(id)).toJson();
         }
 
       } catch (SQLException e) {
           e.printStackTrace();
-          return "{ \"status\": \"500\" }";
+          return Failed.response(500);
       }
 
     } catch (IOException e) {
       e.printStackTrace();
-      return "{ \"status\": \"500\" }";
+      return Failed.response(500);
+    }
+  }
+
+  private class Success extends JsonSerializable {
+    @JsonProperty
+    private String token;
+
+    @JsonProperty
+    final private String status = "200";
+
+    public Success(String token) {
+      this.token = token;
     }
   }
 }
+

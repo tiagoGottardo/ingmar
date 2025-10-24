@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.mindrot.jbcrypt.BCrypt;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 class CreateUser implements Operation {
 
@@ -16,27 +18,19 @@ class CreateUser implements Operation {
 
       String hashedPassword = BCrypt.hashpw(req.usuario.senha, BCrypt.gensalt());
 
-      try (Connection conn = Database.getInstance().getConnection()) {
-
-        PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users (name, password) VALUES (?, ?)");
-
-        pstmt.setString(1, req.usuario.nome);
-        pstmt.setString(2, hashedPassword);
-
-        pstmt.executeUpdate();
-
-      } catch(SQLException e) {
-        if (e.getSQLState().equals("23505")) return "{ \"status\": \"409\", \"message\": \"User already exists.\" }";
-
-        e.printStackTrace();
-        return "{ \"status\": \"500\" }";
-      }
+      String err = UserRepository.createUser(req.usuario.nome, hashedPassword);
+      if(err != null) return err;
 
     } catch(IOException e) {
       e.printStackTrace();
-      return "{ \"status\": \"400\" }";
+      return Failed.response(400);
     }
 
-    return "{ \"status\": \"201\" }";
+    return new Success().toJson();
+  }
+
+  private class Success extends JsonSerializable {
+    @JsonProperty
+    final private String status = "201";
   }
 }
