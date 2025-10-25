@@ -33,9 +33,12 @@ class ClientHandler extends Thread {
 
           String operation = jsonNode.get("operacao").asText();
 
-          if (operation == null) throw new Error("There is no operation!");
+          if (operation == null) {
+            out.println(Failed.response(400, "You need specify the operation!"));
+            continue;
+          }
 
-          out.println(operations.get(operation).run(jsonNode));
+          out.println(operations.get(operation).start(jsonNode));
 
         } catch (IOException e) {
           out.println(Failed.response(400));

@@ -1,10 +1,10 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class Logout implements Operation {
+class Logout extends Operation {
 
   @Override
-  public String run(JsonNode request) {
+  public String run(Context ctx) {
     return new Success().toJson();
   }
 
