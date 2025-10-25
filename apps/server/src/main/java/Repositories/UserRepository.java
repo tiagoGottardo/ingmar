@@ -1,6 +1,7 @@
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 class UserRepository {
 
@@ -25,4 +26,25 @@ class UserRepository {
     }
   }
 
+  static public Result<User> getUserByName(String name) {
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE name = ?")) {
+
+      pstmt.setString(1, name);
+
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (!rs.next()) return new Result(Failed.response(401));
+
+        String id = rs.getString("id");
+        String password = rs.getString("password");
+        String token = rs.getString("token");
+
+        return new Result(new User(id, name, password, token));
+      }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
 }

@@ -35,10 +35,10 @@ class ClientHandler extends Thread {
 
           if (operation == null) throw new Error("There is no operation!");
 
+          out.println(operations.get(operation).run(jsonNode));
 
-          out.println(operations.get(operation).run(received));
         } catch (IOException e) {
-          out.println("{ \"status\": \"400\" }");
+          out.println(Failed.response(400));
           e.printStackTrace();
         }
 

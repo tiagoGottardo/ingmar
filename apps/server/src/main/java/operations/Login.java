@@ -8,43 +8,19 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class Login implements Operation {
   @Override
-  public String run(String rawJson) {
-    ObjectMapper objectMapper = new ObjectMapper();
+  public String run(JsonNode request) {
+    Result<User> result = UserRepository.getUserByName(request.get("usuario").asText());
+    if(result.err != null) return result.err;
 
-    try {
-      LoginDTO req = objectMapper.readValue(rawJson, LoginDTO.class);
+    User user = result.value;
 
-      String sql = "SELECT id, password FROM users WHERE name = ?";
+    if (!BCrypt.checkpw(request.get("senha").asText(), user.password)) return Failed.response(401); 
 
-      try (Connection conn = Database.getInstance().getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        pstmt.setString(1, req.usuario);
-
-        try (ResultSet rs = pstmt.executeQuery()) {
-
-          if (!rs.next()) return Failed.response(401);
-
-          String id = rs.getString("id");
-          String hashedPassword = rs.getString("password");
-
-          if (!BCrypt.checkpw(req.senha, hashedPassword)) return Failed.response(401); 
-
-          return new Success(JWTUtil.generateToken(id)).toJson();
-        }
-
-      } catch (SQLException e) {
-          e.printStackTrace();
-          return Failed.response(500);
-      }
-
-    } catch (IOException e) {
-      e.printStackTrace();
-      return Failed.response(500);
-    }
+    return new Success(JWTUtil.generateToken(user.id)).toJson();
   }
 
   private class Success extends JsonSerializable {

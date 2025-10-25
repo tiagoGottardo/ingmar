@@ -1,30 +1,16 @@
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import org.mindrot.jbcrypt.BCrypt;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 class CreateUser implements Operation {
 
   @Override
-  public String run(String rawJson) {
-    ObjectMapper objectMapper = new ObjectMapper();
+  public String run(JsonNode request) {
+    String hashedPassword = BCrypt.hashpw(request.get("usuario").get("senha").asText(), BCrypt.gensalt());
 
-    try {
-      CreateUserDTO req = objectMapper.readValue(rawJson, CreateUserDTO.class);
-
-      String hashedPassword = BCrypt.hashpw(req.usuario.senha, BCrypt.gensalt());
-
-      String err = UserRepository.createUser(req.usuario.nome, hashedPassword);
-      if(err != null) return err;
-
-    } catch(IOException e) {
-      e.printStackTrace();
-      return Failed.response(400);
-    }
+    String err = UserRepository.createUser(request.get("usuario").get("nome").asText(), hashedPassword);
+    if(err != null) return err;
 
     return new Success().toJson();
   }

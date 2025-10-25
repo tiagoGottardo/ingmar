@@ -1,6 +1,6 @@
 public class Result<V> {
-  private final V value; 
-  private final String err; 
+  public final V value; 
+  public final String err; 
 
   public Result(String err) {
     this.value = null;
