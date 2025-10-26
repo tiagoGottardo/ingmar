@@ -121,13 +121,32 @@ class UserRepository {
       pstmt.setInt(1, Integer.parseInt(id));
 
       int rowsAffected = pstmt.executeUpdate();
-      if (rowsAffected == 0) return Failed.response(500); 
+      if (rowsAffected == 0) return Failed.response(404); 
 
       return null;
 
     } catch (SQLException e) {
         e.printStackTrace();
-        return new Result(Failed.response(500));
+        return Failed.response(500);
+    }
+  }
+
+  static public String updateUserById(String id, String newName, String newPassword) {
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET name = ?, password = ? WHERE id = ?")) {
+
+      pstmt.setString(1, newName);
+      pstmt.setString(2, newPassword);
+      pstmt.setInt(3, Integer.parseInt(id));
+
+      int rowsAffected = pstmt.executeUpdate();
+      if (rowsAffected == 0) return Failed.response(404); 
+
+      return null;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return Failed.response(500);
     }
   }
 
