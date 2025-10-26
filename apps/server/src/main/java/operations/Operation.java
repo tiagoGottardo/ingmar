@@ -10,14 +10,14 @@ abstract class Operation {
     if (!this.isAuth()) return run(new Context(request));
 
     Claims claims = JWTUtil.validateToken(request.get("token").asText());
-    if (!claims) return Failed.response(400, "Invalid Token!");
+    if (claims == null) return Failed.response(400, "Invalid Token!");
 
-    String userId = claims.get("id", String.class);
-
-    Result<User> result = UserRepository.getUserById(userId);
+    Result<User> result = UserRepository.getUserById(claims.getSubject());
     if(result.err != null) return result.err;
 
     User user = result.value;
+
+    if(user.token == null) return Failed.response(400, "Invalid Token!");
 
     return run(new Context(request, user));
   }

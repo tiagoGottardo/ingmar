@@ -95,9 +95,10 @@ class UserRepository {
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
 
-      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.parseInt(id));
 
       try (ResultSet rs = pstmt.executeQuery()) {
+
         if (!rs.next()) return new Result(Failed.response(404));
 
         String name = rs.getString("name");
