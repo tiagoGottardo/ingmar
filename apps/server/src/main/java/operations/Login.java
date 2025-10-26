@@ -21,9 +21,9 @@ public class Login extends Operation {
 
     User user = result.value;
 
-    if(user.token != null) return Failed.response(400, "You can't login twice in a row.");
-
     if(!BCrypt.checkpw(ctx.request.get("senha").asText(), user.password)) return Failed.response(401); 
+
+    if(user.token != null) return new Success(user.token).toJson();
 
     String newToken = JWTUtil.generateToken(user.id);
 
