@@ -2,12 +2,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.jsonwebtoken.Claims;
 
 abstract class Operation {
-  private boolean authentication = true;
+  protected boolean isAuth() { return true; } 
 
   abstract protected String run(Context ctx);
 
   public String start(JsonNode request) {
-    if (!this.authentication) return run(new Context(request));
+    if (!this.isAuth()) return run(new Context(request));
 
     Claims claims = JWTUtil.validateToken(request.get("token").asText());
 

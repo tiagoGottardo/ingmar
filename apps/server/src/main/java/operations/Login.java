@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Login extends Operation {
+  @Override
+  protected boolean isAuth() { return false; } 
 
   @Override
   public String run(Context ctx) {

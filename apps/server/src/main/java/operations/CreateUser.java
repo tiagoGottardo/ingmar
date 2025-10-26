@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.mindrot.jbcrypt.BCrypt;
 
 class CreateUser extends Operation {
+  @Override
+  protected boolean isAuth() { return false; } 
 
   @Override
   public String run(Context ctx) {

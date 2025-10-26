@@ -32,7 +32,7 @@ class UserRepository {
       PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET token = ? WHERE id = ?;");
 
       pstmt.setString(1, token);
-      pstmt.setString(2, id);
+      pstmt.setInt(2, Integer.parseInt(id));
 
       pstmt.executeUpdate();
 
@@ -53,7 +53,7 @@ class UserRepository {
 
       PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET token = NULL WHERE id = ?;");
 
-      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.parseInt(id));
 
       pstmt.executeUpdate();
 
