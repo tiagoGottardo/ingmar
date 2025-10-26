@@ -22,6 +22,7 @@ class ClientHandler extends Thread {
     operations.put("LOGOUT", new Logout());
     operations.put("LISTAR_PROPRIO_USUARIO", new Me());
     operations.put("EXCLUIR_PROPRIO_USUARIO", new DeleteUser());
+    operations.put("EDITAR_PROPRIO_USUARIO", new UpdateUser());
 
     try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
