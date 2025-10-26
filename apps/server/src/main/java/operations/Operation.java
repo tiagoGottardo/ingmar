@@ -10,6 +10,7 @@ abstract class Operation {
     if (!this.isAuth()) return run(new Context(request));
 
     Claims claims = JWTUtil.validateToken(request.get("token").asText());
+    if (!claims) return Failed.response(400, "Invalid Token!");
 
     String userId = claims.get("id", String.class);
 
