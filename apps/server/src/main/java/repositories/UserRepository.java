@@ -114,4 +114,21 @@ class UserRepository {
     }
   }
 
+  static public String deleteUserById(String id) {
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("DELETE FROM users WHERE id = ?")) {
+
+      pstmt.setInt(1, Integer.parseInt(id));
+
+      int rowsAffected = pstmt.executeUpdate();
+      if (rowsAffected == 0) return Failed.response(500); 
+
+      return null;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
+
 }
