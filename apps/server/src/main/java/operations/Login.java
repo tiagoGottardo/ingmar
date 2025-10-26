@@ -5,42 +5,44 @@ import java.sql.ResultSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.mindrot.jbcrypt.BCrypt;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 
-class Login implements Operation {
+public class Login extends Operation {
   @Override
-  public String run(String rawJson) {
-    ObjectMapper objectMapper = new ObjectMapper();
+  protected boolean isAuth() { return false; } 
 
-    try {
-      LoginDTO req = objectMapper.readValue(rawJson, LoginDTO.class);
+  @Override
+  public String run(Context ctx) {
+    Result<User> result = UserRepository.getUserByName(ctx.request.get("usuario").asText());
+    if(result.err != null) return result.err;
 
-      String sql = "SELECT id, password FROM users WHERE name = ?";
+    User user = result.value;
 
-      try (Connection conn = Database.getInstance().getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    if(!BCrypt.checkpw(ctx.request.get("senha").asText(), user.password)) return Failed.response(401); 
 
-        pstmt.setString(1, req.usuario);
+    if(user.token != null) return new Success(user.token).toJson();
 
-        try (ResultSet rs = pstmt.executeQuery()) {
+    String newToken = JWTUtil.generateToken(user.id);
 
-          if (!rs.next()) return "{ \"status\": \"401\" }";
+    String err = UserRepository.updateUserToken(user.id, newToken);
+    if(err != null) return err;
 
-          String id = rs.getString("id");
-          String hashedPassword = rs.getString("password");
+    return new Success(newToken).toJson();
+  }
 
-          if (!BCrypt.checkpw(req.senha, hashedPassword)) return "{ \"status\": \"401\" }";
+  private class Success extends JsonSerializable {
+    @JsonProperty
+    private String token;
 
-          return "{ \"status\": \"200\", \"token\": \"" + JWTUtil.generateToken(id) + "\" }";
-        }
+    @JsonProperty
+    final private String status = "200";
 
-      } catch (SQLException e) {
-          e.printStackTrace();
-          return "{ \"status\": \"500\" }";
-      }
-
-    } catch (IOException e) {
-      e.printStackTrace();
-      return "{ \"status\": \"500\" }";
+    public Success(String token) {
+      this.token = token;
     }
   }
 }
+

@@ -1,42 +1,24 @@
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.mindrot.jbcrypt.BCrypt;
 
-class CreateUser implements Operation {
+class CreateUser extends Operation {
+  @Override
+  protected boolean isAuth() { return false; } 
 
   @Override
-  public String run(String rawJson) {
-    ObjectMapper objectMapper = new ObjectMapper();
+  public String run(Context ctx) {
+    String hashedPassword = BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt());
 
-    try {
-      CreateUserDTO req = objectMapper.readValue(rawJson, CreateUserDTO.class);
+    String err = UserRepository.createUser(ctx.request.get("usuario").get("nome").asText(), hashedPassword);
+    if(err != null) return err;
 
-      String hashedPassword = BCrypt.hashpw(req.usuario.senha, BCrypt.gensalt());
+    return new Success().toJson();
+  }
 
-      try (Connection conn = Database.getInstance().getConnection()) {
-
-        PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users (name, password) VALUES (?, ?)");
-
-        pstmt.setString(1, req.usuario.nome);
-        pstmt.setString(2, hashedPassword);
-
-        pstmt.executeUpdate();
-
-      } catch(SQLException e) {
-        if (e.getSQLState().equals("23505")) return "{ \"status\": \"409\", \"message\": \"User already exists.\" }";
-
-        e.printStackTrace();
-        return "{ \"status\": \"500\" }";
-      }
-
-    } catch(IOException e) {
-      e.printStackTrace();
-      return "{ \"status\": \"400\" }";
-    }
-
-    return "{ \"status\": \"201\" }";
+  private class Success extends JsonSerializable {
+    @JsonProperty
+    final private String status = "201";
   }
 }
