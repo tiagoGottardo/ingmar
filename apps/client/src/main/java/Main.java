@@ -47,6 +47,7 @@ public class Main { // extends Application {
   public static void main(String args[]) {
     HashMap<String, Command> commands = new HashMap<>();
     commands.put("registrar", new Register());
+    commands.put("login", new Login());
 
     TcpHandler tcpHandler = new TcpHandler();
 
@@ -60,16 +61,18 @@ public class Main { // extends Application {
       if (scanner.hasNextLine()) input = scanner.nextLine(); else continue; 
       String strCmd = input.split(" ")[0];
 
-      if (strCmd.equals("connect")) {
-        String hostname = input.split(" ")[1];
-        int port = Integer.parseInt(input.split(" ")[2]);
+      if (strCmd.equals("conectar")) {
+        // String hostname = input.split(" ")[1];
+        // int port = Integer.parseInt(input.split(" ")[2]);
 
-        tcpHandler.connect(hostname, port);
+        tcpHandler.connect("127.0.0.1", 8080);
+        // tcpHandler.connect(hostname, port);
         continue;
       }
 
-      if (strCmd.equals("disconnect")) {
+      if (strCmd.equals("disconectar")) {
         tcpHandler.close();
+        System.out.println("Disconectado.");
         continue;
       }
 
