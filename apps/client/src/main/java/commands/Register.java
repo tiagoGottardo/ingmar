@@ -18,7 +18,7 @@ class Register extends Command {
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
     if(Integer.parseInt(response.get("status").asText()) != 201) {
-      System.out.println("Algo deu errado ao criar o usuário.");
+      System.out.println("Algo deu errado.");
       return response.get("message").asText();
     }
 
