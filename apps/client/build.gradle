@@ -17,6 +17,10 @@ application {
     mainClass = 'Main'
 }
 
+run {
+    standardInput = System.in
+}
+
 javafx {
     version = "21"
     modules = [ 'javafx.controls', 'javafx.web' ]

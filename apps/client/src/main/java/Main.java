@@ -1,48 +1,94 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+// import java.io.BufferedReader;
+// import java.io.InputStreamReader;
+// import java.io.PrintWriter;
+// import java.net.ServerSocket;
+// import java.net.Socket;
 
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import javafx.scene.layout.StackPane;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.scene.layout.VBox;
-import com.networknt.schema.ValidationMessage;
-import java.util.Set;
+// import javafx.application.Application;
+// import javafx.scene.Scene;
+// import javafx.stage.Stage;
+// import com.fasterxml.jackson.core.JsonProcessingException;
+// import com.fasterxml.jackson.databind.JsonNode;
+// import javafx.scene.layout.StackPane;
+// import com.fasterxml.jackson.databind.ObjectMapper;
+// import javafx.scene.layout.VBox;
+// import com.networknt.schema.ValidationMessage;
+// import java.util.Set;
 
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+// import javafx.scene.web.WebEngine;
+// import javafx.scene.web.WebView;
 
-import java.io.IOException;
+// import java.io.IOException;
 
-public class Main extends Application {
+import java.util.HashMap;
+import java.util.Scanner;
 
-  @Override
-  public void start(Stage stage) throws IOException {
+public class Main { // extends Application {
 
-    WebView webView = new WebView();
-    WebEngine webEngine = webView.getEngine();
-    webEngine.load(getClass().getResource("web/index.html").toExternalForm());
+  // @Override
+  // public void start(Stage stage) throws IOException {
 
-    StackPane root = new StackPane();
-    root.getChildren().add(webView);
-    Scene scene = new Scene(root);
+    // WebView webView = new WebView();
+    // WebEngine webEngine = webView.getEngine();
+    // webEngine.load(getClass().getResource("web/index.html").toExternalForm());
 
-    stage.setScene(scene);
-    stage.setTitle("Ingmar");
-    stage.setFullScreen(true);
-    stage.show();
+    // StackPane root = new StackPane();
+    // root.getChildren().add(webView);
+    // Scene scene = new Scene(root);
 
-  }
+    // stage.setScene(scene);
+    // stage.setTitle("Ingmar");
+    // stage.setFullScreen(true);
+    // stage.show();
 
-  public static void main(String[] args) {
-    launch(args);
+  // }
+
+  public static void main(String args[]) {
+    HashMap<String, Command> commands = new HashMap<>();
+    commands.put("one", new One());
+
+    TcpHandler tcpHandler = new TcpHandler();
+
+    System.out.println("Welcome to Ingmar Client!");
+
+    String input;
+    Scanner scanner = new Scanner(System.in);
+
+    while (true) {
+      System.out.print("> ");
+      if (scanner.hasNextLine()) input = scanner.nextLine(); else continue; 
+      String strCmd = input.split(" ")[0];
+
+      if (strCmd.equals("connect")) {
+        String hostname = input.split(" ")[1];
+        int port = Integer.parseInt(input.split(" ")[2]);
+
+        tcpHandler.connect(hostname, port);
+        continue;
+      }
+
+      if (strCmd.equals("disconnect")) {
+        tcpHandler.close();
+        continue;
+      }
+
+      if(strCmd.equals("exit")) break;
+
+      Command cmd = commands.get(strCmd);
+
+      if(cmd == null) {
+        System.out.println("Command '" + strCmd + "' is invalid command.\nType 'help' to see all commands.");
+        continue;
+      }
+
+      System.out.println(cmd.start(input, tcpHandler));
+
+    }
+    
+    scanner.close();
+
+    System.out.println("You exit Ingmar Client.");
   }
 }
 
