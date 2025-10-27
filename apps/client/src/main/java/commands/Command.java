@@ -5,6 +5,15 @@ abstract class Command {
 
   abstract protected String run(String args[], TcpHandler tcpHandler);
 
+  protected JsonNode mapJson(String rawJson) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      return objectMapper.readTree(rawJson); 
+    } catch (IOException e) {
+      return null;
+    }
+  }
+
   public String start(String input, TcpHandler tcpHandler) {
     String[] args = input.split(" ");
 

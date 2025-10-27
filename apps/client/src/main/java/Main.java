@@ -46,7 +46,7 @@ public class Main { // extends Application {
 
   public static void main(String args[]) {
     HashMap<String, Command> commands = new HashMap<>();
-    commands.put("one", new One());
+    commands.put("registrar", new Register());
 
     TcpHandler tcpHandler = new TcpHandler();
 
