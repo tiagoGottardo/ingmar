@@ -5,20 +5,25 @@ import java.io.IOException;
 
 class Login extends Command {
 
+  Login(TcpHandler tcpHandler) {
+    super(tcpHandler);
+  }
+
+  @Override
+  protected boolean isAuth() { return true; } 
+
   @Override
   protected boolean validateInput(String args[]) {
     return true;
   }
 
-  protected String run(String args[], TcpHandler tcpHandler) {
-
+  protected String run(String args[]) {
     Request request = new Request(args[1], args[2]);
 
     JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
     if(Integer.parseInt(response.get("status").asText()) != 200) {
-      System.out.println("Algo deu errado.");
       return response.get("message").asText();
     }
 
