@@ -11,7 +11,8 @@ class Failed {
     404, "O item que você tentou acessar não existe",
     405, "Algum campo não está preenchido corretamente",
     409, "Instância já existe",
-    422, "Dados faltantes"
+    422, "Dados faltantes",
+    500, "Erro Interno do Servidor"
   );
 
   @JsonProperty

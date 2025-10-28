@@ -5,7 +5,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 public class JWTUtil {
-  private static final String SECRET_KEY = "N1NqQmpvclRkclhGYlV1TDFoM0JjVjZIeDB3MndqVVo="; // #TODO: Use env variables
+  private static final String SECRET_KEY = "N1NqQmpvclRkclhGYlV1TDFoM0JjVjZIeDB3MndqVVo=";
 
   public static String generateToken(String id) {
     return Jwts.builder()
