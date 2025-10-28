@@ -5,12 +5,19 @@ import java.io.IOException;
 
 class Register extends Command {
 
+  Register(TcpHandler tcpHandler) {
+    super(tcpHandler);
+  }
+
+  @Override
+  protected boolean isAuth() { return false; } 
+
   @Override
   protected boolean validateInput(String args[]) {
     return true;
   }
 
-  protected String run(String args[], TcpHandler tcpHandler) {
+  protected String run(String args[], String token) {
 
     Request request = new Request(args[1], args[2]);
 

@@ -29,4 +29,10 @@ public class TokenManager {
       return null;
     }
   }
+
+  public static void deleteToken() {
+    try {
+      Files.deleteIfExists(TOKEN_PATH);
+    } catch (IOException e) { }
+  }
 }

@@ -45,11 +45,13 @@ public class Main { // extends Application {
   // }
 
   public static void main(String args[]) {
-    HashMap<String, Command> commands = new HashMap<>();
-    commands.put("registrar", new Register());
-    commands.put("login", new Login());
-
     TcpHandler tcpHandler = new TcpHandler();
+
+    HashMap<String, Command> commands = new HashMap<>();
+    commands.put("registrar", new Register(tcpHandler));
+    commands.put("login", new Login(tcpHandler));
+    commands.put("logout", new Logout(tcpHandler));
+
 
     System.out.println("Welcome to Ingmar Client!");
 
@@ -85,7 +87,7 @@ public class Main { // extends Application {
         continue;
       }
 
-      System.out.println(cmd.start(input, tcpHandler));
+      System.out.println(cmd.start(input));
 
     }
     
