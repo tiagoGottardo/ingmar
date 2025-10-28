@@ -10,7 +10,7 @@ class Update extends Command {
   }
 
   protected String run(String args[], String token) {
-    if(args.length() != 3) return "Você não usou o comando 'atualizar' da forma correta\nUse o comando 'ajuda'";
+    if(args.length != 3) return "Você não usou o comando 'atualizar' da forma correta\nUse o comando 'ajuda'";
 
     if(!args[1].equals("nome") && !args[1].equals("senha")) 
       return "Você pode atualizar nome ou senha.\nVeja o comando 'ajuda'";

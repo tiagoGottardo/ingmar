@@ -29,8 +29,6 @@ abstract class Command {
     if(isAuth() && token == null) return "Você precisa realizar login para executar esse comando!";
 
     String[] args = input.split(" ");
-
-    // if(!validateInput(args)) return "Você não executou esse comando corretamente\nVeja o comando 'help' para entender melhor.";
     
     return run(args, token);
   }

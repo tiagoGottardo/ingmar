@@ -9,7 +9,7 @@ class Delete extends Command {
   }
 
   protected String run(String args[], String token) {
-    if(args.length() != 1) return "Você não usou o comando 'deletar' da forma correta\nUse o comando 'ajuda'";
+    if(args.length != 1) return "Você não usou o comando 'deletar' da forma correta\nUse o comando 'ajuda'";
 
     Request request = new Request(token);
 
