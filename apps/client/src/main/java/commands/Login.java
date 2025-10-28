@@ -13,6 +13,8 @@ class Login extends Command {
   protected boolean isAuth() { return false; } 
 
   protected String run(String args[], String token) {
+    if(args.length() != 3) return "Você não usou o comando 'login' da forma correta\nUse o comando 'ajuda'";
+
     Request request = new Request(args[1], args[2]);
 
     JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 

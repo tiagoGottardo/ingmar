@@ -9,6 +9,8 @@ class Me extends Command {
   }
 
   protected String run(String args[], String token) {
+    if(args.length() != 1) return "Você não usou o comando 'eu' da forma correta\nUse o comando 'ajuda'";
+
     Request request = new Request(token);
 
     JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 
