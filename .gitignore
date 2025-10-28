@@ -15,3 +15,7 @@ count.txt
 .tanstack
 token
 web
+.project
+.settings
+.classpath
+bin
