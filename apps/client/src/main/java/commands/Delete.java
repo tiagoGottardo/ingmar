@@ -13,7 +13,10 @@ class Delete extends Command {
 
     Request request = new Request(token);
 
-    JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 
+    String res = tcpHandler.sendMessage(request.toJson());
+    if(res == null) return "O servidor fechou a conexão";
+
+    JsonNode response = mapJson(res); 
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
     if(Integer.parseInt(response.get("status").asText()) != 200)

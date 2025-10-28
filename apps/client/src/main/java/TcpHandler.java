@@ -80,8 +80,10 @@ public class TcpHandler {
 
         String response = reader.readLine(); 
         
-        if (response == null) 
-          return "Server fechow (read null).";
+        if (response == null) {
+          close();
+          return null;
+        }
         
         return response;
 
