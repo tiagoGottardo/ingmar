@@ -10,6 +10,40 @@ public class TcpHandler {
   private BufferedReader reader;
   private final Object ioLock = new Object();
 
+  public String validateAndConnect(String input) {
+    String[] args = input.split(" ");
+
+    if(args.length != 3)
+      return "Você não usou o comando 'conectar' da forma correta\nUse o comando 'ajuda'";
+
+    String hostname = args[1];
+    String port = args[2];
+
+    String[] parts = hostname.split("\\.");
+
+    try {
+      for (String part : parts) {
+        int p = Integer.parseInt(part);
+        if (p < 0 || p > 255) return "Endereço inválido!";
+      }
+    } catch (NumberFormatException e) {
+      return "Endereço inválido!";
+    }
+
+    try {
+      int portInt = Integer.parseInt(port); 
+      if (portInt < 0 || portInt > 65535) return "Porta inválida!";
+
+      // connect("127.0.0.1", 8080);
+      connect(hostname, portInt);
+
+    } catch (NumberFormatException e) {
+      return "Porta inválida!";
+    }
+
+    return null;
+  }
+
   public void connect(String hostname, int port) {
     if (hostname == null || hostname.isEmpty()) {
       System.out.println("Hostname cannot be null or empty");
@@ -21,22 +55,22 @@ public class TcpHandler {
       return;
     }
 
-    System.out.println("Connecting to " + hostname + ":" + port);
+    System.out.println("Conectando -> " + hostname + ":" + port);
     close(); 
     try {
       this.socket = new Socket(hostname, port);
       this.writer = new PrintWriter(socket.getOutputStream(), true);
       this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      System.out.println("Connection established.");
+      System.out.println("Conexão estabelecida.");
     } catch (IOException e) {
-      System.err.println("Connection failed: " + e.getMessage());
+      System.err.println("Conexão recusada em " + hostname + ":" + port);
     }
   }
 
   public String sendMessage(String message) {
     synchronized (ioLock) {
       if (!isConnected()) 
-        return "You do not connect to the server!"; 
+        return "Você não está conectado em um servidor!"; 
         
       try {
         writer.println(message);
@@ -53,7 +87,7 @@ public class TcpHandler {
 
       } catch (IOException e) {
         close(); 
-        return "Communication error: " + e.getMessage();
+        return "Algo deu errado na comunicação com o servidor: " + e.getMessage();
       }
     }
   }

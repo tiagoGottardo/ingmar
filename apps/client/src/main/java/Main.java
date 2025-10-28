@@ -66,17 +66,17 @@ public class Main { // extends Application {
       String strCmd = input.split(" ")[0];
 
       if (strCmd.equals("conectar")) {
-        // String hostname = input.split(" ")[1];
-        // int port = Integer.parseInt(input.split(" ")[2]);
-
-        tcpHandler.connect("127.0.0.1", 8080);
-        // tcpHandler.connect(hostname, port);
+        String err = tcpHandler.validateAndConnect(input);
+        if(err != null) System.out.println(err);
         continue;
       }
 
       if (strCmd.equals("disconectar")) {
-        tcpHandler.close();
-        System.out.println("Disconectado.");
+        if(tcpHandler.isConnected()) {
+          tcpHandler.close();
+          System.out.println("Disconectado");
+        } else System.out.println("Você não está conectado a nenhum servidor");
+        
         continue;
       }
 
