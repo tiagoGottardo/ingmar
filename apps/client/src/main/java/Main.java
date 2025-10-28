@@ -50,6 +50,7 @@ public class Main { // extends Application {
     HashMap<String, Command> commands = new HashMap<>();
     commands.put("registrar", new Register(tcpHandler));
     commands.put("login", new Login(tcpHandler));
+    commands.put("logout", new Logout(tcpHandler));
 
 
     System.out.println("Welcome to Ingmar Client!");
