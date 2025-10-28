@@ -52,6 +52,7 @@ public class Main { // extends Application {
     commands.put("login", new Login(tcpHandler));
     commands.put("logout", new Logout(tcpHandler));
     commands.put("deletar", new Delete(tcpHandler));
+    commands.put("atualizar", new Update(tcpHandler));
     commands.put("eu", new Me(tcpHandler));
 
 
