@@ -55,7 +55,7 @@ public class Main { // extends Application {
     commands.put("atualizar", new Update(tcpHandler));
     commands.put("eu", new Me(tcpHandler));
 
-    System.out.println("Welcome to Ingmar Client!");
+    System.out.println("Bem-vindo ao Ingmar Client!");
 
     String input;
     Scanner scanner = new Scanner(System.in);
@@ -87,7 +87,7 @@ public class Main { // extends Application {
       Command cmd = commands.get(strCmd);
 
       if(cmd == null) {
-        System.out.println("Command '" + strCmd + "' is invalid command.\nType 'help' to see all commands.");
+        System.out.println("O comando '" + strCmd + "' não existe.\nUse o comando 'ajuda' para ver todos os comandos.");
         continue;
       }
 
@@ -97,7 +97,7 @@ public class Main { // extends Application {
     
     scanner.close();
 
-    System.out.println("You exit Ingmar Client.");
+    System.out.println("Você saiu do Ingmar Client.");
   }
 }
 

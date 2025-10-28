@@ -46,12 +46,12 @@ public class TcpHandler {
 
   public void connect(String hostname, int port) {
     if (hostname == null || hostname.isEmpty()) {
-      System.out.println("Hostname cannot be null or empty");
+      System.out.println("Hostname não pode ser vazio");
       return;
     }
     
     if (port <= 0 || port > 65535) {
-      System.out.println("Port number must be between 1 and 65535");
+      System.out.println("Porta precisa estar entre 1 e 65535");
       return;
     }
 
@@ -81,7 +81,7 @@ public class TcpHandler {
         String response = reader.readLine(); 
         
         if (response == null) 
-          return "Server closed the connection (read null).";
+          return "Server fechow (read null).";
         
         return response;
 
