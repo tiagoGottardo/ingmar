@@ -16,6 +16,11 @@ public class Login extends Operation {
 
   @Override
   public String run(Context ctx) {
+    String validationError = Validator.validateName(ctx.request.get("usuario").asText());
+    if(validationError != null) return Failed.response(400, validationError);
+    validationError = Validator.validatePassword(ctx.request.get("senha").asText());
+    if(validationError != null) return Failed.response(400, validationError);
+
     Result<User> result = UserRepository.getUserByName(ctx.request.get("usuario").asText());
     if(result.err != null) return result.err;
 

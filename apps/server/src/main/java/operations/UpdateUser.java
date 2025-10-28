@@ -6,6 +6,15 @@ import org.mindrot.jbcrypt.BCrypt;
 class UpdateUser extends Operation {
   @Override
   public String run(Context ctx) {
+    if(ctx.request.get("usuario").get("nome") != null) {
+      String nameValidationError = Validator.validateName(ctx.request.get("usuario").get("nome").asText());
+      if(nameValidationError != null) return Failed.response(400, nameValidationError);
+    }
+
+    if(ctx.request.get("usuario").get("senha") != null) {
+      String passwordValidationError = Validator.validateName(ctx.request.get("usuario").get("senha").asText());
+      if(passwordValidationError != null) return Failed.response(400, passwordValidationError);
+    }
 
     String newPassword = (ctx.request.get("usuario").get("senha") != null) 
     ? BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt()) 
