@@ -4,17 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.IOException;
 
 class Logout extends Command {
-
   Logout(TcpHandler tcpHandler) {
     super(tcpHandler);
-  }
-
-  @Override
-  protected boolean isAuth() { return true; } 
-
-  @Override
-  protected boolean validateInput(String args[]) {
-    return true;
   }
 
   protected String run(String args[], String token) {

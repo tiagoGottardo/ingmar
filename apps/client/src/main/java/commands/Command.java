@@ -11,8 +11,6 @@ abstract class Command {
 
   protected boolean isAuth() { return true; } 
   
-  abstract protected boolean validateInput(String args[]);
-
   abstract protected String run(String args[], String token);
 
   protected JsonNode mapJson(String rawJson) { ObjectMapper objectMapper = new ObjectMapper();
@@ -32,7 +30,7 @@ abstract class Command {
 
     String[] args = input.split(" ");
 
-    if(!validateInput(args)) return "Você não executou esse comando corretamente\nVeja o comando 'help' para entender melhor.";
+    // if(!validateInput(args)) return "Você não executou esse comando corretamente\nVeja o comando 'help' para entender melhor.";
     
     return run(args, token);
   }

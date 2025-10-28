@@ -8,11 +8,6 @@ class Me extends Command {
     super(tcpHandler);
   }
 
-  @Override
-  protected boolean validateInput(String args[]) {
-    return true;
-  }
-
   protected String run(String args[], String token) {
     Request request = new Request(token);
 
