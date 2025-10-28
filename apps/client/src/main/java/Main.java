@@ -55,7 +55,6 @@ public class Main { // extends Application {
     commands.put("atualizar", new Update(tcpHandler));
     commands.put("eu", new Me(tcpHandler));
 
-
     System.out.println("Welcome to Ingmar Client!");
 
     String input;
@@ -81,7 +80,9 @@ public class Main { // extends Application {
         continue;
       }
 
-      if(strCmd.equals("exit")) break;
+      if(strCmd.equals("ajuda")) { Help.show(); continue; }
+
+      if(strCmd.equals("sair")) break;
 
       Command cmd = commands.get(strCmd);
 
