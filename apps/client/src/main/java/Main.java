@@ -21,7 +21,7 @@
 
 // import java.io.IOException;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main { // extends Application {
@@ -47,16 +47,16 @@ public class Main { // extends Application {
   public static void main(String args[]) {
     TcpHandler tcpHandler = new TcpHandler();
 
-    HashMap<String, Command> commands = new HashMap<>();
-    commands.put("registrar", new Register(tcpHandler));
-    commands.put("login", new Login(tcpHandler));
-    commands.put("logout", new Logout(tcpHandler));
-    commands.put("deletar", new Delete(tcpHandler));
-    commands.put("atualizar", new Update(tcpHandler));
-    commands.put("eu", new Me(tcpHandler));
+    Map<String, Command> commands = Map.of(
+        "registrar", new Register(tcpHandler),
+        "login",     new Login(tcpHandler),
+        "logout",    new Logout(tcpHandler),
+        "deletar",   new Delete(tcpHandler),
+        "atualizar", new Update(tcpHandler),
+        "eu",        new Me(tcpHandler)
+    );
 
-
-    System.out.println("Welcome to Ingmar Client!");
+    System.out.println("Bem-vindo ao Ingmar Client!");
 
     String input;
     Scanner scanner = new Scanner(System.in);
@@ -67,26 +67,28 @@ public class Main { // extends Application {
       String strCmd = input.split(" ")[0];
 
       if (strCmd.equals("conectar")) {
-        // String hostname = input.split(" ")[1];
-        // int port = Integer.parseInt(input.split(" ")[2]);
-
-        tcpHandler.connect("127.0.0.1", 8080);
-        // tcpHandler.connect(hostname, port);
+        String err = tcpHandler.validateAndConnect(input);
+        if(err != null) System.out.println(err);
         continue;
       }
 
       if (strCmd.equals("disconectar")) {
-        tcpHandler.close();
-        System.out.println("Disconectado.");
+        if(tcpHandler.isConnected()) {
+          tcpHandler.close();
+          System.out.println("Disconectado");
+        } else System.out.println("Você não está conectado a nenhum servidor");
+        
         continue;
       }
 
-      if(strCmd.equals("exit")) break;
+      if(strCmd.equals("ajuda")) { Help.show(); continue; }
+
+      if(strCmd.equals("sair")) break;
 
       Command cmd = commands.get(strCmd);
 
       if(cmd == null) {
-        System.out.println("Command '" + strCmd + "' is invalid command.\nType 'help' to see all commands.");
+        System.out.println("O comando '" + strCmd + "' não existe.\nUse o comando 'ajuda' para ver todos os comandos.");
         continue;
       }
 
@@ -96,7 +98,7 @@ public class Main { // extends Application {
     
     scanner.close();
 
-    System.out.println("You exit Ingmar Client.");
+    System.out.println("Você saiu do Ingmar Client.");
   }
 }
 

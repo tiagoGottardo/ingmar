@@ -145,8 +145,11 @@ class UserRepository {
       return null;
 
     } catch (SQLException e) {
-        e.printStackTrace();
-        return Failed.response(500);
+      e.printStackTrace();
+      if ("23505".equals(e.getSQLState())) 
+        return Failed.response(409, "Alguem já usa esse nome"); 
+      
+      return Failed.response(500);
     }
   }
 

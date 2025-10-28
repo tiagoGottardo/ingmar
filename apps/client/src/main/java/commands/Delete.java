@@ -9,13 +9,18 @@ class Delete extends Command {
   }
 
   protected String run(String args[], String token) {
+    if(args.length != 1) return "Você não usou o comando 'deletar' da forma correta\nUse o comando 'ajuda'";
+
     Request request = new Request(token);
 
-    JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 
+    String res = tcpHandler.sendMessage(request.toJson());
+    if(res == null) return "O servidor fechou a conexão";
+
+    JsonNode response = mapJson(res); 
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
     if(Integer.parseInt(response.get("status").asText()) != 200)
-      return response.get("message").asText();
+      return response.get("mensagem").asText();
 
     TokenManager.deleteToken();
 

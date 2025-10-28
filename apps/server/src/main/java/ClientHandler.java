@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.util.HashMap;
+import java.util.Map;
 
 class ClientHandler extends Thread {
   private Socket socket;
@@ -16,13 +16,14 @@ class ClientHandler extends Thread {
   }
 
   public void run() {
-    HashMap<String, Operation> operations = new HashMap<>();
-    operations.put("CRIAR_USUARIO", new CreateUser());
-    operations.put("LOGIN", new Login());
-    operations.put("LOGOUT", new Logout());
-    operations.put("LISTAR_PROPRIO_USUARIO", new Me());
-    operations.put("EXCLUIR_PROPRIO_USUARIO", new DeleteUser());
-    operations.put("EDITAR_PROPRIO_USUARIO", new UpdateUser());
+    Map<String, Operation> operations = Map.of(
+      "CRIAR_USUARIO", new CreateUser(),
+      "LOGIN", new Login(),
+      "LOGOUT", new Logout(),
+      "LISTAR_PROPRIO_USUARIO", new Me(),
+      "EXCLUIR_PROPRIO_USUARIO", new DeleteUser(),
+      "EDITAR_PROPRIO_USUARIO", new UpdateUser()
+    );
 
     try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
@@ -37,7 +38,7 @@ class ClientHandler extends Thread {
           String operation = jsonNode.get("operacao").asText();
 
           if (operation == null) {
-            out.println(Failed.response(400, "You need specify the operation!"));
+            out.println(Failed.response(400, "Você precisa especificar sua operação."));
             continue;
           }
 

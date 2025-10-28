@@ -9,6 +9,11 @@ class CreateUser extends Operation {
 
   @Override
   public String run(Context ctx) {
+    String validationError = Validator.validateName(ctx.request.get("usuario").get("nome").asText());
+    if(validationError != null) return Failed.response(400, validationError);
+    validationError = Validator.validatePassword(ctx.request.get("usuario").get("senha").asText());
+    if(validationError != null) return Failed.response(400, validationError);
+
     String hashedPassword = BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt());
 
     String err = UserRepository.createUser(ctx.request.get("usuario").get("nome").asText(), hashedPassword);
@@ -20,5 +25,8 @@ class CreateUser extends Operation {
   private class Success extends JsonSerializable {
     @JsonProperty
     final private String status = "201";
+
+    @JsonProperty
+    final private String mensagem = "Conta criada com sucesso!";
   }
 }

@@ -10,8 +10,10 @@ class Update extends Command {
   }
 
   protected String run(String args[], String token) {
+    if(args.length != 3) return "Você não usou o comando 'atualizar' da forma correta\nUse o comando 'ajuda'";
+
     if(!args[1].equals("nome") && !args[1].equals("senha")) 
-      return "Você pode atualizar nome ou senha.\nVeja o comando 'help'.";
+      return "Você pode atualizar nome ou senha.\nVeja o comando 'ajuda'";
 
     User user = new User();
 
@@ -20,11 +22,14 @@ class Update extends Command {
 
     Request request = new Request(user, token);
 
-    JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 
+    String res = tcpHandler.sendMessage(request.toJson());
+    if(res == null) return "O servidor fechou a conexão";
+
+    JsonNode response = mapJson(res); 
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
     if(Integer.parseInt(response.get("status").asText()) != 200)
-      return response.get("message").asText();
+      return response.get("mensagem").asText();
 
     return "Você atualizou o " + args[1] + " com sucesso!";
   }

@@ -9,7 +9,9 @@ class Me extends Operation {
 
   private class Success extends JsonSerializable {
     final public String status = "200";
-    final public String message = "Sucesso: operação realizada com sucesso";
+
+    final public String mensagem = "Operação executada com sucesso!";
+
     public String user;
 
     Success(String user) {
