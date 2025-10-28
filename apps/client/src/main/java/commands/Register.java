@@ -22,7 +22,7 @@ class Register extends Command {
 
     if(Integer.parseInt(response.get("status").asText()) != 201) {
       System.out.println("Algo deu errado.");
-      return response.get("message").asText();
+      return response.get("mensagem").asText();
     }
 
     return "Usuário criado com sucesso";

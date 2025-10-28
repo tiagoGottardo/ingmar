@@ -21,7 +21,7 @@ class Login extends Command {
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
     if(Integer.parseInt(response.get("status").asText()) != 200) {
-      return response.get("message").asText();
+      return response.get("mensagem").asText();
     }
 
     if (!TokenManager.saveToken(response.get("token").asText()))

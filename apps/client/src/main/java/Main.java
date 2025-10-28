@@ -21,7 +21,7 @@
 
 // import java.io.IOException;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main { // extends Application {
@@ -47,13 +47,14 @@ public class Main { // extends Application {
   public static void main(String args[]) {
     TcpHandler tcpHandler = new TcpHandler();
 
-    HashMap<String, Command> commands = new HashMap<>();
-    commands.put("registrar", new Register(tcpHandler));
-    commands.put("login", new Login(tcpHandler));
-    commands.put("logout", new Logout(tcpHandler));
-    commands.put("deletar", new Delete(tcpHandler));
-    commands.put("atualizar", new Update(tcpHandler));
-    commands.put("eu", new Me(tcpHandler));
+    Map<String, Command> commands = Map.of(
+        "registrar", new Register(tcpHandler),
+        "login",     new Login(tcpHandler),
+        "logout",    new Logout(tcpHandler),
+        "deletar",   new Delete(tcpHandler),
+        "atualizar", new Update(tcpHandler),
+        "eu",        new Me(tcpHandler)
+    );
 
     System.out.println("Bem-vindo ao Ingmar Client!");
 

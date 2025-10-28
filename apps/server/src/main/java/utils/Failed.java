@@ -18,16 +18,16 @@ class Failed {
   private String status;
 
   @JsonProperty
-  private String message;
+  private String mensagem;
 
   private Failed(int status, String message) {
     this.status = String.valueOf(status);
-    this.message = message;
+    this.mensagem = message;
   }
 
   private Failed(int status) {
     this.status = String.valueOf(status);
-    this.message = DEFAULT_MESSAGE.get(status); 
+    this.mensagem = DEFAULT_MESSAGE.get(status); 
   }
 
   private String toJson() {

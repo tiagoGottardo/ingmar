@@ -33,5 +33,8 @@ class UpdateUser extends Operation {
   private class Success extends JsonSerializable {
     @JsonProperty
     final private String status = "200";
+
+    @JsonProperty
+    final private String mensagem = "Operação executada com sucesso!";
   }
 }

@@ -25,5 +25,8 @@ class CreateUser extends Operation {
   private class Success extends JsonSerializable {
     @JsonProperty
     final private String status = "201";
+
+    @JsonProperty
+    final private String mensagem = "Conta criada com sucesso!";
   }
 }

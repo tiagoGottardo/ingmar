@@ -45,6 +45,9 @@ public class Login extends Operation {
     @JsonProperty
     final private String status = "200";
 
+    @JsonProperty
+    final private String mensagem = "Operação executada com sucesso!";
+
     public Success(String token) {
       this.token = token;
     }
