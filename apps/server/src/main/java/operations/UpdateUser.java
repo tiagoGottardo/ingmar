@@ -12,7 +12,7 @@ class UpdateUser extends Operation {
     }
 
     if(ctx.request.get("usuario").get("senha") != null) {
-      String passwordValidationError = Validator.validateName(ctx.request.get("usuario").get("senha").asText());
+      String passwordValidationError = Validator.validatePassword(ctx.request.get("usuario").get("senha").asText());
       if(passwordValidationError != null) return Failed.response(400, passwordValidationError);
     }
 
