@@ -12,13 +12,7 @@ class Register extends Command {
   @Override
   protected boolean isAuth() { return false; } 
 
-  @Override
-  protected boolean validateInput(String args[]) {
-    return true;
-  }
-
   protected String run(String args[], String token) {
-
     Request request = new Request(args[1], args[2]);
 
     JsonNode response = mapJson(tcpHandler.sendMessage(request.toJson())); 
