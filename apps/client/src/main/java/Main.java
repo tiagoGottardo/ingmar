@@ -51,6 +51,7 @@ public class Main { // extends Application {
     commands.put("registrar", new Register(tcpHandler));
     commands.put("login", new Login(tcpHandler));
     commands.put("logout", new Logout(tcpHandler));
+    commands.put("deletar", new Delete(tcpHandler));
     commands.put("eu", new Me(tcpHandler));
 
 
