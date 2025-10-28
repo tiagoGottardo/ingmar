@@ -1,8 +1,19 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Map;
 
 class Failed {
+  public static final Map<Integer, String> DEFAULT_MESSAGE = Map.of(
+    400, "Não foi possível processar a requisição devido a um formato incorreto ou dados inválidos",
+    401, "Credenciais Inválidas",
+    403, "Você não tem permissão para executar essa ação",
+    404, "O item que você tentou acessar não existe",
+    405, "Algum campo não está preenchido corretamente",
+    409, "Instância já existe",
+    422, "Dados faltantes"
+  );
+
   @JsonProperty
   private String status;
 
@@ -16,7 +27,7 @@ class Failed {
 
   private Failed(int status) {
     this.status = String.valueOf(status);
-    this.message = "Default message"; // #TODO: create the HashMap to this.
+    this.message = DEFAULT_MESSAGE.get(status); 
   }
 
   private String toJson() {
