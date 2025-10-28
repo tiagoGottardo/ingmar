@@ -14,7 +14,7 @@ public class Main {
         "eu",        new Me(tcpHandler)
     );
 
-    System.out.println("Bem-vindo ao Ingmar Client!");
+    System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");
 
     String input;
     Scanner scanner = new Scanner(System.in);
