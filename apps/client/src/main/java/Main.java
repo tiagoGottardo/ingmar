@@ -30,10 +30,10 @@ public class Main {
         continue;
       }
 
-      if (strCmd.equals("disconectar")) {
+      if (strCmd.equals("desconectar")) {
         if(tcpHandler.isConnected()) {
           tcpHandler.close();
-          System.out.println("Disconectado");
+          System.out.println("Desconectado");
         } else System.out.println("Você não está conectado a nenhum servidor");
         
         continue;

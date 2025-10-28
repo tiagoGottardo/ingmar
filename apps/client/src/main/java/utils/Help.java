@@ -2,7 +2,7 @@ class Help {
   static public void show() {
     System.out.println("Lista de comandos:");
     System.out.println("conectar <endereço> <porta> | Conecta-se a um servidor");
-    System.out.println("disconectar                 | Disconecta do servidor");
+    System.out.println("desconectar                 | Desconecta do servidor");
     System.out.println("sair                        | Fecha o cliente");
     System.out.println("registrar <nome> <senha>    | Cria um novo usuário");
     System.out.println("login <nome> <senha>        | Entrar no sistema");
