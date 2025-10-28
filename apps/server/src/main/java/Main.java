@@ -1,6 +1,5 @@
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.io.IOException;
 
 public class Main {
@@ -12,11 +11,8 @@ public class Main {
     try (ServerSocket serverSocket = new ServerSocket(port, backlog, InetAddress.getByName(hostname))) {
       System.out.println("Server is listening on " + hostname + ":" + port);
       
-      while (true) {
-        Socket socket = serverSocket.accept();
-
-        new ClientHandler(socket).start();
-      }
+      while (true) new ClientHandler(serverSocket.accept()).start();
+      
     } catch (IOException e) {
       System.out.println("Server exception: " + e.getMessage());
     }
