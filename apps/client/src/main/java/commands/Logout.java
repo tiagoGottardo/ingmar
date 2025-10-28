@@ -13,6 +13,8 @@ class Logout extends Command {
 
     Request request = new Request(token);
 
+    TokenManager.deleteToken();
+
     String res = tcpHandler.sendMessage(request.toJson());
     if(res == null) return "O servidor fechou a conexão";
 
@@ -21,8 +23,6 @@ class Logout extends Command {
 
     if(Integer.parseInt(response.get("status").asText()) != 200)
       return response.get("mensagem").asText();
-
-    TokenManager.deleteToken();
 
     return "Logout realizado com sucesso!";
   }
