@@ -12,10 +12,10 @@ class Me extends Operation {
 
     final public String mensagem = "Operação executada com sucesso!";
 
-    public String user;
+    public String usuario;
 
     Success(String user) {
-      this.user = user;
+      this.usuario = user;
     }
   }
 }
