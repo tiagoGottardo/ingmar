@@ -24,7 +24,11 @@ class Delete extends Command {
 
     TokenManager.deleteToken();
 
-    return "Seu usuário foi deletado!";
+    System.out.println("Seu usuário foi deletado!");
+
+    tcpHandler.close();
+
+    return "Você fechou a conexão com o servidor!";
   }
 
   private class Request extends JsonSerializable {

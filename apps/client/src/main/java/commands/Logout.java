@@ -24,7 +24,11 @@ class Logout extends Command {
     if(Integer.parseInt(response.get("status").asText()) != 200)
       return response.get("mensagem").asText();
 
-    return "Logout realizado com sucesso!";
+    System.out.println("Logout realizado com sucesso!");
+
+    tcpHandler.close();
+
+    return "Você fechou a conexão com o servidor!";
   }
 
   private class Request extends JsonSerializable {
