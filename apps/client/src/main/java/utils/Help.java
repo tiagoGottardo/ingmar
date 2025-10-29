@@ -1,6 +1,7 @@
 class Help {
   static public void show() {
     System.out.println("Lista de comandos:");
+    System.out.println("conectar                    | Conecta-se ao servidor padrão 0.0.0.0:8080");
     System.out.println("conectar <endereço> <porta> | Conecta-se a um servidor");
     System.out.println("desconectar                 | Desconecta do servidor");
     System.out.println("sair                        | Fecha o cliente");

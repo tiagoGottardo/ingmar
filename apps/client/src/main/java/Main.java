@@ -25,6 +25,11 @@ public class Main {
       String strCmd = input.split(" ")[0];
 
       if (strCmd.equals("conectar")) {
+        if(input.split(" ").length == 1) {
+          tcpHandler.connect("0.0.0.0", 8080);
+          continue;
+        }
+
         String err = tcpHandler.validateAndConnect(input);
         if(err != null) System.out.println(err);
         continue;
