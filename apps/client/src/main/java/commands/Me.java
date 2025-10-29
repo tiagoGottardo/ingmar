@@ -22,7 +22,7 @@ class Me extends Command {
     if(Integer.parseInt(response.get("status").asText()) != 200)
       return response.get("mensagem").asText();
 
-    return "Você está logado com o usuário: " + response.get("user").asText();
+    return "Você está logado com o usuário: " + response.get("usuario").asText();
   }
 
   private class Request extends JsonSerializable {

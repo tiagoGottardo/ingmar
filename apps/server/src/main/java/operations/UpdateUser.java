@@ -8,12 +8,12 @@ class UpdateUser extends Operation {
   public String run(Context ctx) {
     if(ctx.request.get("usuario").get("nome") != null) {
       String nameValidationError = Validator.validateName(ctx.request.get("usuario").get("nome").asText());
-      if(nameValidationError != null) return Failed.response(400, nameValidationError);
+      if(nameValidationError != null) return Failed.response(405, nameValidationError);
     }
 
     if(ctx.request.get("usuario").get("senha") != null) {
       String passwordValidationError = Validator.validatePassword(ctx.request.get("usuario").get("senha").asText());
-      if(passwordValidationError != null) return Failed.response(400, passwordValidationError);
+      if(passwordValidationError != null) return Failed.response(405, passwordValidationError);
     }
 
     String newPassword = (ctx.request.get("usuario").get("senha") != null) 
