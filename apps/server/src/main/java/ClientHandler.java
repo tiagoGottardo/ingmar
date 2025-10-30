@@ -35,6 +35,8 @@ class ClientHandler extends Thread {
       while ((request = in.readLine()) != null) {
         ObjectMapper objectMapper = new ObjectMapper();
 
+        System.out.println(request);
+
         try {
           JsonNode jsonNode = objectMapper.readTree(request); 
 
@@ -46,6 +48,8 @@ class ClientHandler extends Thread {
           }
 
           String response = operations.get(operation).start(jsonNode); 
+
+          System.out.println(response);
 
           out.println(response);
 
