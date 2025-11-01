@@ -114,11 +114,15 @@ class UserRepository {
     }
   }
 
-  static public String deleteUserById(String id) {
+  static public String deleteUserById(String strId) {
+    int id = Integer.parseInt(strId);
+
+    if(id == 1) return Failed.response(403);
+
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("DELETE FROM users WHERE id = ?")) {
 
-      pstmt.setInt(1, Integer.parseInt(id));
+      pstmt.setInt(1, id);
 
       int rowsAffected = pstmt.executeUpdate();
       if (rowsAffected == 0) return Failed.response(404); 
@@ -131,13 +135,17 @@ class UserRepository {
     }
   }
 
-  static public String updateUserById(String id, String newName, String newPassword) {
+  static public String updateUserById(String strId, String newName, String newPassword) {
+    int id = Integer.parseInt(strId);
+
+    if(id == 1) return Failed.response(403);
+
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET name = ?, password = ? WHERE id = ?")) {
 
       pstmt.setString(1, newName);
       pstmt.setString(2, newPassword);
-      pstmt.setInt(3, Integer.parseInt(id));
+      pstmt.setInt(3, id);
 
       int rowsAffected = pstmt.executeUpdate();
       if (rowsAffected == 0) return Failed.response(404); 
