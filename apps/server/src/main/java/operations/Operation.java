@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 abstract class Operation {
   protected boolean isAuth() { return true; } 
 
+  protected boolean mustBeAdmin() { return false; } 
+
   abstract protected String run(Context ctx);
 
   public String start(JsonNode request) {
@@ -18,6 +20,8 @@ abstract class Operation {
     User user = result.value;
 
     if(user.token == null) return Failed.response(401, "Invalid Token!");
+
+    if(mustBeAdmin() && !user.isAdmin()) return Failed.response(403);
 
     return run(new Context(request, user));
   }

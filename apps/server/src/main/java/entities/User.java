@@ -10,4 +10,13 @@ class User {
     this.password = password;
     this.token = token;
   }
+
+  User(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  public boolean isAdmin() {
+    return Integer.parseInt(id) == 1;
+  }
 }
