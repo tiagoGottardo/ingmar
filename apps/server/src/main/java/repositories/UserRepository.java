@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class UserRepository {
 
   public static String createUser (String name, String password) {
@@ -91,6 +94,29 @@ class UserRepository {
     }
   }
 
+  static public Result<List<User>> getUsers() {
+    List<User> users = new ArrayList<>();
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users")) {
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+
+        users.add(new User(String.valueOf(id), name));
+      }
+
+      return new Result<List<User>>(users);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
+
   static public Result<User> getUserById(String id) {
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
@@ -114,11 +140,15 @@ class UserRepository {
     }
   }
 
-  static public String deleteUserById(String id) {
+  static public String deleteUserById(String strId) {
+    int id = Integer.parseInt(strId);
+
+    if(id == 1) return Failed.response(403);
+
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("DELETE FROM users WHERE id = ?")) {
 
-      pstmt.setInt(1, Integer.parseInt(id));
+      pstmt.setInt(1, id);
 
       int rowsAffected = pstmt.executeUpdate();
       if (rowsAffected == 0) return Failed.response(404); 
@@ -131,13 +161,17 @@ class UserRepository {
     }
   }
 
-  static public String updateUserById(String id, String newName, String newPassword) {
+  static public String updateUserById(String strId, String newName, String newPassword) {
+    int id = Integer.parseInt(strId);
+
+    if(id == 1) return Failed.response(403);
+
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET name = ?, password = ? WHERE id = ?")) {
 
       pstmt.setString(1, newName);
       pstmt.setString(2, newPassword);
-      pstmt.setInt(3, Integer.parseInt(id));
+      pstmt.setInt(3, id);
 
       int rowsAffected = pstmt.executeUpdate();
       if (rowsAffected == 0) return Failed.response(404); 

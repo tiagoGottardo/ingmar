@@ -9,6 +9,7 @@ class CreateUser extends Operation {
 
   @Override
   public String run(Context ctx) {
+    //#TODO: improve request validation
     String validationError = Validator.validateName(ctx.request.get("usuario").get("nome").asText());
     if(validationError != null) return Failed.response(405, validationError);
     validationError = Validator.validatePassword(ctx.request.get("usuario").get("senha").asText());
