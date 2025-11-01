@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class UserRepository {
 
   public static String createUser (String name, String password) {
@@ -84,6 +87,29 @@ class UserRepository {
 
         return new Result(new User(id, name, password, token));
       }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
+
+  static public Result<List<User>> getUsers() {
+    List<User> users = new ArrayList<>();
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users")) {
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+
+        users.add(new User(String.valueOf(id), name));
+      }
+
+      return new Result<List<User>>(users);
 
     } catch (SQLException e) {
         e.printStackTrace();

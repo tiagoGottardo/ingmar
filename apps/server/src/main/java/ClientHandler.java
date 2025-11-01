@@ -22,7 +22,8 @@ class ClientHandler extends Thread {
       "LOGOUT", new Logout(),
       "LISTAR_PROPRIO_USUARIO", new Me(),
       "EXCLUIR_PROPRIO_USUARIO", new DeleteUser(),
-      "EDITAR_PROPRIO_USUARIO", new UpdateUser()
+      "EDITAR_PROPRIO_USUARIO", new UpdateUser(),
+      "LISTAR_USUARIOS", new GetAllUsers()
     );
 
     try (
