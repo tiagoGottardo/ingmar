@@ -11,7 +11,8 @@ public class JsonValidator {
   private static final JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
 
   public static final Map<String, JsonSchema> schemas = Map.of(
-    "LOGIN", buildSchema("LOGIN")
+    "LOGIN", buildSchema("LOGIN"),
+    "CRIAR_USUARIO", buildSchema("CRIAR_USUARIO")
   );
 
   static private JsonSchema buildSchema(String name) {
