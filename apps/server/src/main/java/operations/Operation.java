@@ -9,6 +9,9 @@ abstract class Operation {
   abstract protected String run(Context ctx);
 
   public String start(JsonNode request) {
+    String err = JsonValidator.validate(request, request.get("operacao").asText());
+    if(err != null) return err;
+
     if (!this.isAuth()) return run(new Context(request));
 
     Claims claims = JWTUtil.validateToken(request.get("token").asText());

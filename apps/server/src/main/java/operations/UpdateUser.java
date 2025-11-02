@@ -6,25 +6,9 @@ import org.mindrot.jbcrypt.BCrypt;
 class UpdateUser extends Operation {
   @Override
   public String run(Context ctx) {
-    if(ctx.request.get("usuario").get("nome") != null) {
-      String nameValidationError = Validator.validateName(ctx.request.get("usuario").get("nome").asText());
-      if(nameValidationError != null) return Failed.response(405, nameValidationError);
-    }
+    String newPassword = BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt());
 
-    if(ctx.request.get("usuario").get("senha") != null) {
-      String passwordValidationError = Validator.validatePassword(ctx.request.get("usuario").get("senha").asText());
-      if(passwordValidationError != null) return Failed.response(405, passwordValidationError);
-    }
-
-    String newPassword = (ctx.request.get("usuario").get("senha") != null) 
-    ? BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt()) 
-    : ctx.user.password;
-
-    String newName = (ctx.request.get("usuario").get("nome") != null) 
-    ? ctx.request.get("usuario").get("nome").asText()
-    : ctx.user.name;
-
-    String err = UserRepository.updateUserById(ctx.user.id, newName, newPassword);
+    String err = UserRepository.updateUserPassword(ctx.user.id, newPassword);
     if (err != null) return err;
 
     return new Success().toJson();
