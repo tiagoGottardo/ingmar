@@ -6,9 +6,9 @@ import org.mindrot.jbcrypt.BCrypt;
 class UpdateUser extends Operation {
   @Override
   public String run(Context ctx) {
-    String newPassword = BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt()) 
+    String newPassword = BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt());
 
-    String err = UserRepository.updateUserById(ctx.user.id, newPassword);
+    String err = UserRepository.updateUserPassword(ctx.user.id, newPassword);
     if (err != null) return err;
 
     return new Success().toJson();
