@@ -8,11 +8,12 @@ import java.util.Map;
 
 public class JsonValidator {
   private static final ObjectMapper objectMapper = new ObjectMapper();
-  private static final JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+    private static final JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
 
   public static final Map<String, JsonSchema> schemas = Map.of(
     "LOGIN", buildSchema("LOGIN"),
-    "CRIAR_USUARIO", buildSchema("CRIAR_USUARIO")
+    "CRIAR_USUARIO", buildSchema("CRIAR_USUARIO"),
+    "EDITAR_PROPRIO_USUARIO", buildSchema("EDITAR_PROPRIO_USUARIO")
   );
 
   static private JsonSchema buildSchema(String name) {

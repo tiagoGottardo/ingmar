@@ -31,7 +31,7 @@
   "message": {
     "required": {
       "nome": "O nome é obrigatório.",
-      "senha": "A senha é obrigatório."
+      "senha": "A senha é obrigatória."
     }
   }
 }
