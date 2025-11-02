@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,28 +28,27 @@ class ClientHandler extends Thread {
       PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
       BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
     ) {
-       
-      String request;
-      while ((request = in.readLine()) != null) {
-        ObjectMapper objectMapper = new ObjectMapper();
+      ObjectMapper objectMapper = new ObjectMapper();
+      String rawRequest;
 
-        System.out.println(request);
-
+      while ((rawRequest = in.readLine()) != null) {
         try {
-          JsonNode jsonNode = objectMapper.readTree(request); 
+          JsonNode request = objectMapper.readTree(rawRequest); 
 
-          String operation = jsonNode.get("operacao").asText();
+          System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(request));
+
+          String operation = request.get("operacao").asText();
 
           if (operation == null) {
             out.println(Failed.response(400, "Você precisa especificar sua operação."));
             continue;
           }
 
-          String response = operations.get(operation).start(jsonNode); 
-
-          System.out.println(response);
+          String response = operations.get(operation).start(request); 
 
           out.println(response);
+
+          System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectMapper.readTree(response)));
 
           if((operation.equals("EXCLUIR_PROPRIO_USUARIO") || operation.equals("LOGOUT")) && objectMapper.readTree(response).get("status").asText().equals("200")) break;
 
@@ -60,8 +56,8 @@ class ClientHandler extends Thread {
           out.println(Failed.response(400));
           e.printStackTrace();
         }
-
       }
+
     } catch (IOException e) {
       System.out.println("Client exception: " + e.getMessage());
     }

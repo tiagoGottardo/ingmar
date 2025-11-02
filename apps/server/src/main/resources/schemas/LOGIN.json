@@ -22,7 +22,7 @@
       "message": {
         "type": "A senha precisa ser uma string.",
         "minLength": "A senha precisa ter no mínimo 3 caracteres.",
-        "MaxLength": "A senha precisa ter no máximo 20 caracteres.",
+        "maxLength": "A senha precisa ter no máximo 20 caracteres.",
         "pattern": "A senha só pode conter letras e números."
       }
     }
