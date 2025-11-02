@@ -161,17 +161,16 @@ class UserRepository {
     }
   }
 
-  static public String updateUserById(String strId, String newName, String newPassword) {
+  static public String updateUserPassword(String strId, String newPassword) {
     int id = Integer.parseInt(strId);
 
     if(id == 1) return Failed.response(403);
 
     try (Connection conn = Database.getInstance().getConnection();
-      PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET name = ?, password = ? WHERE id = ?")) {
+      PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET password = ? WHERE id = ?")) {
 
-      pstmt.setString(1, newName);
-      pstmt.setString(2, newPassword);
-      pstmt.setInt(3, id);
+      pstmt.setString(1, newPassword);
+      pstmt.setInt(2, id);
 
       int rowsAffected = pstmt.executeUpdate();
       if (rowsAffected == 0) return Failed.response(404); 
@@ -179,10 +178,6 @@ class UserRepository {
       return null;
 
     } catch (SQLException e) {
-      e.printStackTrace();
-      if ("23505".equals(e.getSQLState())) 
-        return Failed.response(409, "Alguem já usa esse nome"); 
-      
       return Failed.response(500);
     }
   }
