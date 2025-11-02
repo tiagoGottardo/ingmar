@@ -20,7 +20,8 @@ class ClientHandler extends Thread {
       "LISTAR_PROPRIO_USUARIO", new Me(),
       "EXCLUIR_PROPRIO_USUARIO", new DeleteUser(),
       "EDITAR_PROPRIO_USUARIO", new UpdateUser(),
-      "LISTAR_USUARIOS", new GetAllUsers()
+      "LISTAR_USUARIOS", new GetAllUsers(),
+      "ADMIN_EDITAR_USUARIO", new AdminUpdateUser()
     );
 
     try (

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "usuario": {
+      "type": "object",
+      "properties": {
+        "senha": { 
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 20,
+          "pattern": "^[a-zA-Z0-9]*$",
+          "message": {
+            "type": "A senha precisa ser uma string.",
+            "minLength": "A senha precisa ter no mínimo 3 caracteres.",
+            "maxLength": "A senha precisa ter no máximo 20 caracteres.",
+            "pattern": "A senha só pode conter letras e números."
+          }
+        }
+      },
+      "required": ["senha"],
+      "message": {
+        "required": {
+          "senha": "A senha é obrigatória."
+        }
+      }
+    },
+    "id": { 
+      "type": "string",
+      "message": {
+        "type": "O id precisa ser uma string."
+      }
+    }
+  },
+  "required": ["usuario", "id"],
+  "message": {
+    "required": {
+      "usuario": "O usuário é obrigatório.",
+      "id": "O id é obrigatório."
+    }
+  }
+}
