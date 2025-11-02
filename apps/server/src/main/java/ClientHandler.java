@@ -21,7 +21,8 @@ class ClientHandler extends Thread {
       "EXCLUIR_PROPRIO_USUARIO", new DeleteUser(),
       "EDITAR_PROPRIO_USUARIO", new UpdateUser(),
       "LISTAR_USUARIOS", new GetAllUsers(),
-      "ADMIN_EDITAR_USUARIO", new AdminUpdateUser()
+      "ADMIN_EDITAR_USUARIO", new AdminUpdateUser(),
+      "ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser()
     );
 
     try (
