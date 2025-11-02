@@ -13,7 +13,8 @@ public class JsonValidator {
   public static final Map<String, JsonSchema> schemas = Map.of(
     "LOGIN", buildSchema("LOGIN"),
     "CRIAR_USUARIO", buildSchema("CRIAR_USUARIO"),
-    "EDITAR_PROPRIO_USUARIO", buildSchema("EDITAR_PROPRIO_USUARIO")
+    "EDITAR_PROPRIO_USUARIO", buildSchema("EDITAR_PROPRIO_USUARIO"),
+    "ADMIN_EDITAR_USUARIO", buildSchema("ADMIN_EDITAR_USUARIO") 
   );
 
   static private JsonSchema buildSchema(String name) {
