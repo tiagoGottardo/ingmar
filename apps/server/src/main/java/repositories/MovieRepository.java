@@ -87,4 +87,37 @@ class MovieRepository {
     }
   }
 
+  static public Result<List<Movie>> getMovies() {
+    List<Movie> movies = new ArrayList<>();
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM movies")) {
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        Movie movie = new Movie();
+
+        movie.id = String.valueOf(rs.getInt("id"));
+        movie.title = rs.getString("title");
+        movie.director = rs.getString("director");
+        movie.year = String.valueOf(rs.getInt("year"));
+        movie.synopsis = rs.getString("synopsis");
+
+        Array genreArray = rs.getArray("genre");
+
+        if (genreArray == null) return new Result(Failed.response(500));
+
+        movie.genre = (String[]) genreArray.getArray();
+
+        movies.add(movie);
+      }
+
+      return new Result<List<Movie>>(movies);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
+
 }
