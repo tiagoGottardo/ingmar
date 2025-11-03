@@ -25,7 +25,8 @@ class ClientHandler extends Thread {
       Map.entry("ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser()),
       Map.entry("CRIAR_FILME", new CreateMovie()),
       Map.entry("EDITAR_FILME", new UpdateMovie()),
-      Map.entry("LISTAR_FILMES", new GetAllMovies())
+      Map.entry("LISTAR_FILMES", new GetAllMovies()),
+      Map.entry("EXCLUIR_FILME", new AdminDeleteMovie())
     );
 
     try (
