@@ -15,9 +15,10 @@ public class JsonValidator {
     "CRIAR_USUARIO", buildSchema("CRIAR_USUARIO"),
     "EDITAR_PROPRIO_USUARIO", buildSchema("EDITAR_PROPRIO_USUARIO"),
     "ADMIN_EDITAR_USUARIO", buildSchema("ADMIN_EDITAR_USUARIO"),
-    "ADMIN_EXCLUIR_USUARIO", buildSchema("ADMIN_EXCLUIR_USUARIO"),
+    "ADMIN_EXCLUIR_USUARIO", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO"),
     "CRIAR_FILME", buildSchema("CRIAR_FILME"),
-    "EDITAR_FILME", buildSchema("EDITAR_FILME")
+    "EDITAR_FILME", buildSchema("EDITAR_FILME"),
+    "EXCLUIR_FILME", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO")
   );
 
   static private JsonSchema buildSchema(String name) {
