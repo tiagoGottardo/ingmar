@@ -22,7 +22,8 @@ class ClientHandler extends Thread {
       "EDITAR_PROPRIO_USUARIO", new UpdateUser(),
       "LISTAR_USUARIOS", new GetAllUsers(),
       "ADMIN_EDITAR_USUARIO", new AdminUpdateUser(),
-      "ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser()
+      "ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser(),
+      "CRIAR_FILME", new CreateMovie()
     );
 
     try (
