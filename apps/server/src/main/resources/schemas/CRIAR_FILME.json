@@ -55,6 +55,16 @@
             "maxLength": "A sinopse não pode conter menos que 2 caracteres."
           }
         }
+      },
+      "required": ["titulo", "diretor", "ano", "genero", "sinopse"],
+      "message": {
+        "required": {
+          "titulo": "O titulo é obrigatório.",
+          "diretor": "O diretor é obrigatório.",
+          "ano": "O ano é obrigatório.",
+          "genero": "O genero é obrigatório.",
+          "sinopse": "O sinopse é obrigatório."
+        }
       }
     }
   },
