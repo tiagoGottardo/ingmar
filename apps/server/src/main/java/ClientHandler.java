@@ -13,17 +13,18 @@ class ClientHandler extends Thread {
   }
 
   public void run() {
-    Map<String, Operation> operations = Map.of(
-      "CRIAR_USUARIO", new CreateUser(),
-      "LOGIN", new Login(),
-      "LOGOUT", new Logout(),
-      "LISTAR_PROPRIO_USUARIO", new Me(),
-      "EXCLUIR_PROPRIO_USUARIO", new DeleteUser(),
-      "EDITAR_PROPRIO_USUARIO", new UpdateUser(),
-      "LISTAR_USUARIOS", new GetAllUsers(),
-      "ADMIN_EDITAR_USUARIO", new AdminUpdateUser(),
-      "ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser(),
-      "CRIAR_FILME", new CreateMovie()
+    Map<String, Operation> operations = Map.ofEntries(
+      Map.entry("CRIAR_USUARIO", new CreateUser()),
+      Map.entry("LOGIN", new Login()),
+      Map.entry("LOGOUT", new Logout()),
+      Map.entry("LISTAR_PROPRIO_USUARIO", new Me()),
+      Map.entry("EXCLUIR_PROPRIO_USUARIO", new DeleteUser()),
+      Map.entry("EDITAR_PROPRIO_USUARIO", new UpdateUser()),
+      Map.entry("LISTAR_USUARIOS", new GetAllUsers()),
+      Map.entry("ADMIN_EDITAR_USUARIO", new AdminUpdateUser()),
+      Map.entry("ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser()),
+      Map.entry("CRIAR_FILME", new CreateMovie()),
+      Map.entry("EDITAR_FILME", new UpdateMovie())
     );
 
     try (

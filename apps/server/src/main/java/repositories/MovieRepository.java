@@ -1,8 +1,4 @@
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +24,66 @@ class MovieRepository {
     } catch(SQLException e) {
       e.printStackTrace();
       return Failed.response(500);
+    }
+  }
+
+  static public String updateMovie(Movie movie) {
+    if(movie.id == null) { 
+      System.out.println("Hiper merda");
+      return Failed.response(500);
+    }
+
+    int id = Integer.parseInt(movie.id);
+    int year = Integer.parseInt(movie.year);
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("UPDATE movies SET title = ?, director = ?, year = ?, genre = ?, synopsis = ? WHERE id = ?")) {
+
+      pstmt.setString(1, movie.title);
+      pstmt.setString(2, movie.director);
+      pstmt.setInt(3, year);
+      pstmt.setArray(4, conn.createArrayOf("TEXT", movie.genre));
+      pstmt.setString(5, movie.synopsis);
+
+      pstmt.setInt(6, id);
+
+      int rowsAffected = pstmt.executeUpdate();
+      if (rowsAffected == 0) return Failed.response(404); 
+
+      return null;
+
+    } catch (SQLException e) {
+      System.out.println("Hiper merda 2" + e.getMessage());
+      return Failed.response(500);
+    }
+  }
+  
+  static public Result<Movie> getMovieById(String id) {
+    Movie movie = new Movie();
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM movies WHERE id = ?")) {
+
+      pstmt.setInt(1, Integer.parseInt(id));
+
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (!rs.next()) return new Result(Failed.response(404));
+
+        movie.title = rs.getString("title");
+        movie.director = rs.getString("director");
+        movie.year = String.valueOf(rs.getInt("year"));
+        movie.synopsis = rs.getString("synopsis");
+
+        Array genreArray = rs.getArray("genre");
+        if (genreArray == null) return new Result(Failed.response(500));
+        movie.genre = (String[]) genreArray.getArray();
+
+        return new Result(movie);
+      }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
     }
   }
 
