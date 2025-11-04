@@ -17,7 +17,8 @@ public class Main {
       Map.entry("listar-usuarios", new ShowUsers(tcpHandler)),
       Map.entry("atualizar-usuario", new AdminUpdateUser(tcpHandler)),
       Map.entry("deletar-usuario", new AdminDeleteUser(tcpHandler)),
-      Map.entry("registrar-filme", new RegisterMovie(tcpHandler, scanner))
+      Map.entry("registrar-filme", new RegisterMovie(tcpHandler, scanner)),
+      Map.entry("atualizar-filme", new UpdateMovie(tcpHandler, scanner))
     );
 
     System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");

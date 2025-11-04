@@ -23,10 +23,8 @@ class Register extends Command {
     JsonNode response = mapJson(res); 
     if(response == null) return "Algo deu errado ao desserializar o json de resposta";
 
-    if(Integer.parseInt(response.get("status").asText()) != 201) {
-      System.out.println("Algo deu errado.");
+    if(Integer.parseInt(response.get("status").asText()) != 201) 
       return response.get("mensagem").asText();
-    }
 
     return "Usuário criado com sucesso";
   }

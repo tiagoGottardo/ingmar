@@ -74,6 +74,8 @@ class Movie {
     System.out.print("Digite a Sinopse: ");
     movie.synopsis = scanner.nextLine();
 
+    if(movie.genre.length == 1 && movie.genre[0].length() == 0) movie.genre = null;
+
     return movie;
   }
 
