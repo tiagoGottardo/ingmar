@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main { 
   public static void main(String args[]) {
     TcpHandler tcpHandler = new TcpHandler();
+    Scanner scanner = new Scanner(System.in);
 
     Map<String, Command> commands = Map.ofEntries(
       Map.entry("registrar", new Register(tcpHandler)),
@@ -15,14 +16,13 @@ public class Main {
       Map.entry("listar-filmes", new ShowMovies(tcpHandler)),
       Map.entry("listar-usuarios", new ShowUsers(tcpHandler)),
       Map.entry("atualizar-usuario", new AdminUpdateUser(tcpHandler)),
-      Map.entry("deletar-usuario", new AdminDeleteUser(tcpHandler))
+      Map.entry("deletar-usuario", new AdminDeleteUser(tcpHandler)),
+      Map.entry("registrar-filme", new RegisterMovie(tcpHandler, scanner))
     );
 
     System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");
 
     String input;
-    Scanner scanner = new Scanner(System.in);
-
     while (true) {
       System.out.print("> ");
       if (scanner.hasNextLine()) input = scanner.nextLine(); else continue; 

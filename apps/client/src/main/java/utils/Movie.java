@@ -2,8 +2,10 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Scanner;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 class Movie {
   public String id;
 
@@ -44,7 +46,7 @@ class Movie {
   public String toString() {
     String genres = "";
     for(String genre : this.genre) genres += (genre + ", ");
-    genres = genres.substring(0, genres.length() - 2);
+    if(genres.length() > 0) genres = genres.substring(0, genres.length() - 2);
 
     return "| " +
       san(this.title, 20) + " | " +
@@ -52,6 +54,27 @@ class Movie {
       san(this.year, 4) + " | " + 
       san(genres, 15) + " | " +
       san(this.synopsis, 50) + " |";
+  }
+
+  public static Movie createMovieFromTerminal(Scanner scanner) {
+    Movie movie = new Movie();
+
+    System.out.print("Título: ");
+    movie.title = scanner.nextLine();
+
+    System.out.print("Diretor: ");
+    movie.director = scanner.nextLine();
+
+    System.out.print("Ano: ");
+    movie.year = scanner.nextLine();
+
+    System.out.print("Digite o(s) Gênero(s) (use ', ' para separar): ");
+    movie.genre = (scanner.nextLine()).split(", ");
+
+    System.out.print("Digite a Sinopse: ");
+    movie.synopsis = scanner.nextLine();
+
+    return movie;
   }
 
 }
