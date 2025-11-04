@@ -12,7 +12,8 @@ public class Main {
         "deletar",   new Delete(tcpHandler),
         "atualizar-senha", new Update(tcpHandler),
         "eu",        new Me(tcpHandler),
-        "listar-filmes", new ShowMovies(tcpHandler)
+        "listar-filmes", new ShowMovies(tcpHandler),
+        "listar-usuarios", new ShowUsers(tcpHandler)
     );
 
     System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");

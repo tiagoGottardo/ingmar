@@ -24,8 +24,8 @@ class ShowMovies extends Command {
 
     Movie[] movies = Movie.fromJsonArray(response.get("filmes"));
 
-    System.out.println(String.format("| %-20s | %-20s | %-4s | %-15s | %-50s", "Título", "Diretor", "Ano", "Gênero", "Sinopse"));
-    System.out.println("-".repeat(123));
+    System.out.println(String.format("| %-20s | %-20s | %-4s | %-15s | %-50s |", "Título", "Diretor", "Ano", "Gênero", "Sinopse"));
+    System.out.println("-".repeat(125));
 
     for(Movie movie : movies) System.out.println(movie.toString());
 

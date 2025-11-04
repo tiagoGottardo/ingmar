@@ -46,12 +46,12 @@ class Movie {
     for(String genre : this.genre) genres += (genre + ", ");
     genres = genres.substring(0, genres.length() - 2);
 
-    return " | " +
+    return "| " +
       san(this.title, 20) + " | " +
       san(this.director, 20) + " | " +
       san(this.year, 4) + " | " + 
       san(genres, 15) + " | " +
-      san(this.synopsis, 50);
+      san(this.synopsis, 50) + " |";
   }
 
 }
