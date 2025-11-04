@@ -5,15 +5,16 @@ public class Main {
   public static void main(String args[]) {
     TcpHandler tcpHandler = new TcpHandler();
 
-    Map<String, Command> commands = Map.of(
-        "registrar", new Register(tcpHandler),
-        "login",     new Login(tcpHandler),
-        "logout",    new Logout(tcpHandler),
-        "deletar",   new Delete(tcpHandler),
-        "atualizar-senha", new Update(tcpHandler),
-        "eu",        new Me(tcpHandler),
-        "listar-filmes", new ShowMovies(tcpHandler),
-        "listar-usuarios", new ShowUsers(tcpHandler)
+    Map<String, Command> commands = Map.ofEntries(
+      Map.entry("registrar", new Register(tcpHandler)),
+      Map.entry("login", new Login(tcpHandler)),
+      Map.entry("logout", new Logout(tcpHandler)),
+      Map.entry("deletar", new Delete(tcpHandler)),
+      Map.entry("atualizar-senha", new Update(tcpHandler)),
+      Map.entry("eu", new Me(tcpHandler)),
+      Map.entry("listar-filmes", new ShowMovies(tcpHandler)),
+      Map.entry("listar-usuarios", new ShowUsers(tcpHandler)),
+      Map.entry("atualizar-usuario", new AdminUpdateUser(tcpHandler))
     );
 
     System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");
