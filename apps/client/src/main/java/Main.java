@@ -11,7 +11,8 @@ public class Main {
         "logout",    new Logout(tcpHandler),
         "deletar",   new Delete(tcpHandler),
         "atualizar-senha", new Update(tcpHandler),
-        "eu",        new Me(tcpHandler)
+        "eu",        new Me(tcpHandler),
+        "listar-filmes", new ShowMovies(tcpHandler)
     );
 
     System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");
@@ -23,6 +24,18 @@ public class Main {
       System.out.print("> ");
       if (scanner.hasNextLine()) input = scanner.nextLine(); else continue; 
       String strCmd = input.split(" ")[0];
+
+      if (strCmd.equals("admin")) {
+        tcpHandler.connect("0.0.0.0", 8080);
+        System.out.println(commands.get("login").start("login admin admin"));
+        continue;
+      }
+
+      if (strCmd.equals("user")) {
+        tcpHandler.connect("0.0.0.0", 8080);
+        System.out.println(commands.get("login").start("login user user"));
+        continue;
+      }
 
       if (strCmd.equals("conectar")) {
         if(input.split(" ").length == 1) {
