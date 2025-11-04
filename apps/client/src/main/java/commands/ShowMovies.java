@@ -2,6 +2,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.IOException;
+import java.util.Arrays;
 
 class ShowMovies extends Command {
   ShowMovies(TcpHandler tcpHandler) {
@@ -9,7 +10,7 @@ class ShowMovies extends Command {
   }
 
   protected String run(String args[], String token) {
-    if(args.length != 1) return "Você não usou o comando 'listar-filmes' da forma correta\nUse o comando 'ajuda'";
+    if(args.length > 2) return "Você não usou o comando 'listar-filmes' da forma correta\nUse o comando 'ajuda'";
 
     Request request = new Request(token);
 
@@ -23,11 +24,19 @@ class ShowMovies extends Command {
       return response.get("mensagem").asText();
 
     Movie[] movies = Movie.fromJsonArray(response.get("filmes"));
+    Movie[] moviesToBeShown;
 
-    System.out.println(String.format("| %-20s | %-20s | %-4s | %-15s | %-50s |", "Título", "Diretor", "Ano", "Gênero", "Sinopse"));
-    System.out.println("-".repeat(125));
+    if (args.length == 1) 
+      moviesToBeShown = movies;
+    else 
+      moviesToBeShown = Arrays.stream(movies)
+        .filter(movie -> { for (String genre : movie.genre) if(genre.equals(args[1])) return true; return false; })
+        .toArray(Movie[]::new);
 
-    for(Movie movie : movies) System.out.println(movie.toString());
+    System.out.println(String.format("| %-3s | %-20s | %-20s | %-4s | %-15s | %-50s |", "Id", "Título", "Diretor", "Ano", "Gênero", "Sinopse"));
+    System.out.println("-".repeat(131));
+
+    for(Movie movie : moviesToBeShown) System.out.println(movie.toString());
 
     return "";
   }

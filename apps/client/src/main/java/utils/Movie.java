@@ -49,6 +49,7 @@ class Movie {
     if(genres.length() > 0) genres = genres.substring(0, genres.length() - 2);
 
     return "| " +
+      san(this.id, 3) + " | " +
       san(this.title, 20) + " | " +
       san(this.director, 20) + " | " +
       san(this.year, 4) + " | " + 
