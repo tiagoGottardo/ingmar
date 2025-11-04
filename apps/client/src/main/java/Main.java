@@ -4,25 +4,43 @@ import java.util.Scanner;
 public class Main { 
   public static void main(String args[]) {
     TcpHandler tcpHandler = new TcpHandler();
+    Scanner scanner = new Scanner(System.in);
 
-    Map<String, Command> commands = Map.of(
-        "registrar", new Register(tcpHandler),
-        "login",     new Login(tcpHandler),
-        "logout",    new Logout(tcpHandler),
-        "deletar",   new Delete(tcpHandler),
-        "atualizar", new Update(tcpHandler),
-        "eu",        new Me(tcpHandler)
+    Map<String, Command> commands = Map.ofEntries(
+      Map.entry("registrar", new Register(tcpHandler)),
+      Map.entry("login", new Login(tcpHandler)),
+      Map.entry("logout", new Logout(tcpHandler)),
+      Map.entry("deletar", new Delete(tcpHandler)),
+      Map.entry("atualizar-senha", new Update(tcpHandler)),
+      Map.entry("eu", new Me(tcpHandler)),
+      Map.entry("listar-filmes", new ShowMovies(tcpHandler)),
+      Map.entry("listar-usuarios", new ShowUsers(tcpHandler)),
+      Map.entry("atualizar-usuario", new AdminUpdateUser(tcpHandler)),
+      Map.entry("deletar-usuario", new AdminDeleteUser(tcpHandler)),
+      Map.entry("registrar-filme", new RegisterMovie(tcpHandler, scanner)),
+      Map.entry("atualizar-filme", new UpdateMovie(tcpHandler, scanner)),
+      Map.entry("deletar-filme", new DeleteMovie(tcpHandler))
     );
 
     System.out.println("Bem-vindo ao Ingmar Client! (Digite 'ajuda' para ver a lista de comandos)");
 
     String input;
-    Scanner scanner = new Scanner(System.in);
-
     while (true) {
       System.out.print("> ");
       if (scanner.hasNextLine()) input = scanner.nextLine(); else continue; 
       String strCmd = input.split(" ")[0];
+
+      if (strCmd.equals("admin")) {
+        tcpHandler.connect("0.0.0.0", 8080);
+        System.out.println(commands.get("login").start("login admin admin"));
+        continue;
+      }
+
+      if (strCmd.equals("user")) {
+        tcpHandler.connect("0.0.0.0", 8080);
+        System.out.println(commands.get("login").start("login user user"));
+        continue;
+      }
 
       if (strCmd.equals("conectar")) {
         if(input.split(" ").length == 1) {
