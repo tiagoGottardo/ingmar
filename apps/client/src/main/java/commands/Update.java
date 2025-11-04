@@ -10,15 +10,11 @@ class Update extends Command {
   }
 
   protected String run(String args[], String token) {
-    if(args.length != 3) return "Você não usou o comando 'atualizar' da forma correta\nUse o comando 'ajuda'";
-
-    if(!args[1].equals("nome") && !args[1].equals("senha")) 
-      return "Você pode atualizar nome ou senha.\nVeja o comando 'ajuda'";
+    if(args.length != 2) return "Você não usou o comando 'atualizar senha' da forma correta\nUse o comando 'ajuda'";
 
     User user = new User();
 
-    if(args[1].equals("nome")) user.nome = args[2];
-    if(args[1].equals("senha")) user.senha = args[2];
+    user.senha = args[2];
 
     Request request = new Request(user, token);
 

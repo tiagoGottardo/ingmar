@@ -10,7 +10,7 @@ public class Main {
         "login",     new Login(tcpHandler),
         "logout",    new Logout(tcpHandler),
         "deletar",   new Delete(tcpHandler),
-        "atualizar", new Update(tcpHandler),
+        "atualizar-senha", new Update(tcpHandler),
         "eu",        new Me(tcpHandler)
     );
 
