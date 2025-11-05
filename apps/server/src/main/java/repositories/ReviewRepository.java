@@ -25,4 +25,52 @@ class ReviewRepository {
     }
   }
 
+  static public String updateReview(Review review) {
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("UPDATE reviews SET movie_id = ?, title = ?, rating = ?, description = ? WHERE id = ?")) {
+
+      pstmt.setInt(1, review.movie_id);
+      pstmt.setString(2, review.title);
+      pstmt.setInt(3, review.rating);
+      pstmt.setString(4, review.description);
+
+      pstmt.setInt(5, review.id);
+
+      int rowsAffected = pstmt.executeUpdate();
+      if (rowsAffected == 0) return Failed.response(404); 
+
+      return null;
+
+    } catch (SQLException e) {
+      return Failed.response(500);
+    }
+  }
+  
+  static public Result<Review> getReviewById(int id) {
+    Review review = new Review();
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reviews WHERE id = ?")) {
+
+      pstmt.setInt(1, id);
+
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (!rs.next()) return new Result(Failed.response(404));
+
+        review.id = id;
+        review.movie_id = rs.getInt("rating");
+        review.title = rs.getString("title");
+        review.username = rs.getString("username");
+        review.rating = rs.getInt("rating");
+        review.description = rs.getString("description");
+
+        return new Result(review);
+      }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
+
 }
