@@ -10,6 +10,16 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data 
       - ./apps/database/V1__Setup.sql:/docker-entrypoint-initdb.d/init.sql 
+  test-db:
+    image: postgres:16-alpine
+    container_name: ingmar-test-db
+    network_mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ingmar
+    volumes:
+      - ./apps/database/V1__Setup.sql:/docker-entrypoint-initdb.d/init.sql 
 
 volumes:
   pg_data: {}
