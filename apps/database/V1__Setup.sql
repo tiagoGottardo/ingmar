@@ -5,7 +5,8 @@ CREATE TABLE users (
   token VARCHAR(125)
 );
 
-INSERT INTO users (name, password) VALUES ('admin', '$2a$10$UdZCpphA6roE2oRH6RfDyeLuyzpSA6FK2PnsH0tqNMp5amp3u9qfG');
+INSERT INTO users (name, password, token) VALUES ('admin', '$2a$10$UdZCpphA6roE2oRH6RfDyeLuyzpSA6FK2PnsH0tqNMp5amp3u9qfG', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzYyMzA4MzMwfQ.pTx_6DINTzf95bhgtJVlfEJyzGU8UMlrtP6jBudbBLg');
+INSERT INTO users (name, password, token) VALUES ('user', '$2a$10$yrOT//xP6tRbz0TxK23mIegv9DosmEPx9tJ4ldKjX5lGCAvUebUUq', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzYyMzA4Mjk5fQ.JVmKy9Aw4LFOX_x6dNvoH7vLYa5WZahtw_QCVWzGq0U');
 
 CREATE TABLE movies (
   id SERIAL PRIMARY KEY,
@@ -27,3 +28,15 @@ INSERT INTO movies (title, director, year, genre, synopsis) VALUES
 ('The Shawshank Redemption', 'Frank Darabont', 1994, ARRAY['Drama'], 'Two imprisoned men bond over years, finding solace and eventual redemption through acts of common decency.'),
 ('Interstellar', 'Christopher Nolan', 2014, ARRAY['Adventure', 'Drama', 'Sci-Fi'], 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity''s survival.'),
 ('Parasite', 'Bong Joon Ho', 2019, ARRAY['Comedy', 'Drama', 'Thriller'], 'A poor family schemes to become employed by a wealthy household and infiltrate their lives.');
+
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  movie_id INT NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  description VARCHAR(250),
+
+  FOREIGN KEY (movie_id) REFERENCES movies(id),
+  FOREIGN KEY (username) REFERENCES users(name)
+);
