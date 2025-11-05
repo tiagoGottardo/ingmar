@@ -1,8 +1,6 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 class CreateMovie extends Operation {
   @Override
   protected boolean mustBeAdmin() { return true; } 

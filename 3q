@@ -1,0 +1,19 @@
+fix: fix create movie schema
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch feat/review
+# Changes to be committed:
+#	modified:   apps/server/src/main/resources/schemas/CRIAR_FILME.json
+#
+# Changes not staged for commit:
+#	modified:   apps/server/src/main/java/ClientHandler.java
+#	modified:   apps/server/src/main/java/operations/CreateMovie.java
+#	modified:   apps/server/src/main/java/utils/JsonValidator.java
+#
+# Untracked files:
+#	apps/server/src/main/java/entities/Review.java
+#	apps/server/src/main/java/operations/CreateReview.java
+#	apps/server/src/main/java/repositories/ReviewRepository.java
+#	apps/server/src/main/resources/schemas/CRIAR_REVIEW.json
+#
