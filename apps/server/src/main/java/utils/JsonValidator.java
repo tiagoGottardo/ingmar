@@ -5,23 +5,25 @@ import com.networknt.schema.*;
 import java.io.InputStream;
 import java.util.Set;
 import java.util.Map;
+import static java.util.Map.entry;
 
 public class JsonValidator {
   private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+  private static final JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
 
-  public static final Map<String, JsonSchema> schemas = Map.of(
-    "LOGIN", buildSchema("LOGIN"),
-    "CRIAR_USUARIO", buildSchema("CRIAR_USUARIO"),
-    "EDITAR_PROPRIO_USUARIO", buildSchema("EDITAR_PROPRIO_USUARIO"),
-    "ADMIN_EDITAR_USUARIO", buildSchema("ADMIN_EDITAR_USUARIO"),
-    "ADMIN_EXCLUIR_USUARIO", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO"),
-    "CRIAR_FILME", buildSchema("CRIAR_FILME"),
-    "EDITAR_FILME", buildSchema("EDITAR_FILME"),
-    "EXCLUIR_FILME", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO"),
-    "CRIAR_REVIEW", buildSchema("CRIAR_REVIEW"),
-    "EDITAR_REVIEW", buildSchema("EDITAR_REVIEW")
-  );
+  public static final Map<String, JsonSchema> schemas = Map.ofEntries(
+    entry("LOGIN", buildSchema("LOGIN")),
+    entry("CRIAR_USUARIO", buildSchema("CRIAR_USUARIO")),
+    entry("EDITAR_PROPRIO_USUARIO", buildSchema("EDITAR_PROPRIO_USUARIO")),
+    entry("ADMIN_EDITAR_USUARIO", buildSchema("ADMIN_EDITAR_USUARIO")),
+    entry("ADMIN_EXCLUIR_USUARIO", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO")),
+    entry("CRIAR_FILME", buildSchema("CRIAR_FILME")),
+    entry("EDITAR_FILME", buildSchema("EDITAR_FILME")),
+    entry("EXCLUIR_FILME", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO")),
+    entry("CRIAR_REVIEW", buildSchema("CRIAR_REVIEW")),
+    entry("EDITAR_REVIEW", buildSchema("EDITAR_REVIEW")),
+    entry("BUSCAR_FILME_ID", buildSchema("BUSCAR_FILME_ID"))
+);
 
   static private JsonSchema buildSchema(String name) {
     try (InputStream schemaStream = Main.class.getResourceAsStream("/schemas/" + name +".json")) {
