@@ -1,9 +1,13 @@
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class Movie {
   public String id;
 
@@ -21,6 +25,8 @@ class Movie {
 
   @JsonProperty("sinopse")
   public String synopsis;
+
+  public List<Review> reviews;
 
   @JsonIgnore
   static public Movie fromJson(JsonNode json) {
