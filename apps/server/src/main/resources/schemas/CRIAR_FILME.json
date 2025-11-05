@@ -50,7 +50,7 @@
           "minLength": 2,
           "maxLength": 250,
           "message": {
-            "type": "O diretor precisa ser uma string.",
+            "type": "A sinopse precisa ser uma string.",
             "minLength": "A sinopse não pode conter mais que 250 caracteres.",
             "maxLength": "A sinopse não pode conter menos que 2 caracteres."
           }
