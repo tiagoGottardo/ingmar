@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test:server": "./apps/server/tests/run.sh"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "tailwindcss": "^4.1.14"
