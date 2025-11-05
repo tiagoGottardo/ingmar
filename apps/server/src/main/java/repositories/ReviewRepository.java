@@ -58,7 +58,7 @@ class ReviewRepository {
         if (!rs.next()) return new Result(Failed.response(404));
 
         review.id = id;
-        review.movie_id = rs.getInt("rating");
+        review.movie_id = rs.getInt("movie_id");
         review.title = rs.getString("title");
         review.username = rs.getString("username");
         review.rating = rs.getInt("rating");
@@ -66,6 +66,37 @@ class ReviewRepository {
 
         return new Result(review);
       }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new Result(Failed.response(500));
+    }
+  }
+
+    static public Result<List<Review>> getReviewsByMovieId(int movie_id) {
+    List<Review> reviews = new ArrayList<>();
+
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reviews WHERE movie_id = ?")) {
+
+      pstmt.setInt(1, movie_id);
+
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        Review review = new Review();
+
+        review.id = rs.getInt("movie_id");
+        review.movie_id = rs.getInt("movie_id");
+        review.title = rs.getString("title");
+        review.username = rs.getString("username");
+        review.rating = rs.getInt("rating");
+        review.description = rs.getString("description");
+
+        reviews.add(review);
+      }
+
+      return new Result<List<Review>>(reviews);
 
     } catch (SQLException e) {
         e.printStackTrace();
