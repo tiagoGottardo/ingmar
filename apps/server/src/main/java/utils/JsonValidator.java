@@ -22,7 +22,8 @@ public class JsonValidator {
     entry("EXCLUIR_FILME", buildSchema("ADMIN_EXCLUIR_FILME-USUARIO")),
     entry("CRIAR_REVIEW", buildSchema("CRIAR_REVIEW")),
     entry("EDITAR_REVIEW", buildSchema("EDITAR_REVIEW")),
-    entry("BUSCAR_FILME_ID", buildSchema("BUSCAR_FILME_ID"))
+    entry("BUSCAR_FILME_ID", buildSchema("BUSCAR_FILME_ID")),
+    entry("EXCLUIR_REVIEW", buildSchema("EXCLUIR_REVIEW"))
 );
 
   static private JsonSchema buildSchema(String name) {

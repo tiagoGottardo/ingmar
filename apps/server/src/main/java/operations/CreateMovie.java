@@ -1,7 +1,7 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class CreateMovie extends Operation {
+class CreateMovieOp extends Operation {
   @Override
   protected boolean mustBeAdmin() { return true; } 
 

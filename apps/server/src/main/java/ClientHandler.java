@@ -23,14 +23,15 @@ class ClientHandler extends Thread {
       Map.entry("LISTAR_USUARIOS", new GetAllUsers()),
       Map.entry("ADMIN_EDITAR_USUARIO", new AdminUpdateUser()),
       Map.entry("ADMIN_EXCLUIR_USUARIO", new AdminDeleteUser()),
-      Map.entry("CRIAR_FILME", new CreateMovie()),
+      Map.entry("CRIAR_FILME", new CreateMovieOp()),
       Map.entry("EDITAR_FILME", new UpdateMovie()),
       Map.entry("LISTAR_FILMES", new GetAllMovies()),
       Map.entry("EXCLUIR_FILME", new AdminDeleteMovie()),
       Map.entry("CRIAR_REVIEW", new CreateReview()),
       Map.entry("EDITAR_REVIEW", new UpdateReview()),
       Map.entry("BUSCAR_FILME_ID", new GetMovieById()),
-      Map.entry("LISTAR_REVIEWS_USUARIO", new GetMyReviews())
+      Map.entry("LISTAR_REVIEWS_USUARIO", new GetMyReviews()),
+      Map.entry("EXCLUIR_REVIEW", new DeleteReview())
     );
 
     try (

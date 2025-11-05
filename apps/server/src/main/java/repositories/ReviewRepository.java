@@ -135,4 +135,20 @@ class ReviewRepository {
     }
   }
 
+  static public String deleteReview(int id) {
+    try (Connection conn = Database.getInstance().getConnection();
+      PreparedStatement pstmt = conn.prepareStatement("DELETE FROM reviews WHERE id = ?")) {
+
+      pstmt.setInt(1, id);
+
+      int rowsAffected = pstmt.executeUpdate();
+      if (rowsAffected == 0) return Failed.response(404); 
+
+      return null;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return Failed.response(500);
+    }
+  }
 }
