@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "review": {
+      "type": "object",
+      "properties": {
+        "nota": { 
+          "type": "integer",
+          "message": {
+            "type": "O id precisa ser um inter válido."
+          }
+        },
+        "id_filme": { 
+          "type": "integer",
+          "message": {
+            "type": "O id_filme precisa ser um inteiro válido."
+          }
+        },
+        "titulo": { 
+          "type": "string",
+          "maxLength": 30,
+          "message": {
+            "type": "O título precisa ser uma string.",
+            "maxLength": "O nome precisa ter no máximo 20 caracteres."
+          }
+        },
+        "nota": { 
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "message": {
+            "type": "A nota precisa ser um número válido.",
+            "minimum": "A nota precisa estar entre 1 e 5.",
+            "maximum": "A nota precisa estar entre 1 e 5."
+          }
+        },
+        "descricao": { 
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 250,
+          "message": {
+            "type": "O descrição precisa ser uma string.",
+            "minLength": "A descrição não pode conter mais que 250 caracteres.",
+            "maxLength": "A descrição não pode conter menos que 2 caracteres."
+          }
+        }
+      },
+      "required": ["id"],
+      "message": {
+        "required": {
+          "id": "O id é obrigatório."
+        }
+      }
+    }
+  },
+  "required": ["review"],
+  "message": {
+    "required": {
+      "review": "A review é obrigatória."
+    }
+  }
+}

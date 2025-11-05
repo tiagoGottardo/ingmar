@@ -29,7 +29,6 @@ class MovieRepository {
 
   static public String updateMovie(Movie movie) {
     if(movie.id == null) { 
-      System.out.println("Hiper merda");
       return Failed.response(500);
     }
 
@@ -53,7 +52,6 @@ class MovieRepository {
       return null;
 
     } catch (SQLException e) {
-      System.out.println("Hiper merda 2" + e.getMessage());
       return Failed.response(500);
     }
   }

@@ -54,7 +54,7 @@
   "required": ["review"],
   "message": {
     "required": {
-      "filme": "A review é obrigatória."
+      "review": "A review é obrigatória."
     }
   }
 }
