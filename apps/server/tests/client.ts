@@ -15,12 +15,12 @@ export const connectToServer = (address: string, port: number): Promise<net.Sock
       resolve(client!)
     })
 
-    client.on("error", (err) => {
+    client.once("error", (err) => {
       console.error("Connection error:", err.message)
       reject(err)
     })
 
-    client.on("close", () => {
+    client.once("close", () => {
       client = null
     })
   })
@@ -39,16 +39,23 @@ export const disconnectServer = (): void => {
 
 export const sendMessage = (message: any): Promise<any> => {
   return new Promise((resolve, reject) => {
-    if (!getClient()) return reject(new Error("Not connected to server."))
+    const client = getClient()
 
-    getClient()?.once("data", (data) => {
+    if (!client) return reject(new Error("Not connected to server."))
+    
+    const resolveHandler = (data: Buffer) => {
+      client.removeListener("error", rejectHandler)
       resolve(JSON.parse(data.toString()))
-    })
+    }
 
-    getClient()?.once("error", (err) => {
+    const rejectHandler = (err: Error) => {
+      client.removeListener("data", resolveHandler)
       reject(err)
-    })
+    }
 
-    getClient()?.write(JSON.stringify(message) + "\n")
+    client.once("data", resolveHandler)
+    client.once("error", rejectHandler)
+
+    client.write(JSON.stringify(message) + "\n")
   })
 }
