@@ -1,17 +1,10 @@
-import { it, beforeAll, afterAll, describe, expect } from "bun:test"
+import { it, describe, expect } from "bun:test"
 
-import { connectToServer, sendMessage, disconnectServer } from '../client'
+import { sendMessage, } from '../client'
 import { login } from "../messages";
 import { config } from '../config'
 
 const { user } = config
-
-beforeAll(async () => {
-  const { address, port } = config
-  await connectToServer(address, port)
-})
-
-afterAll(() => { disconnectServer() });
 
 describe('Login suite', () => {
 

@@ -3,6 +3,6 @@ docker compose up -d test-db
 
 sleep 1
 
-bun test
+bun test --preload ./apps/server/tests/setup.ts --serial
 
 docker compose down

@@ -1,17 +1,9 @@
-import { it, beforeAll, afterAll, describe, expect } from "bun:test";
+import { it, describe, expect } from "bun:test";
 
-import { connectToServer, sendMessage, disconnectServer } from '../client'
-import { login, createUser, deleteOwnUser } from "../messages";
-import { config } from '../config'
+import { sendMessage } from '../client'
+import { login, createUser, listOwnUser } from "../messages";
 
-beforeAll(async () => {
-  const { address, port } = config
-  await connectToServer(address, port)
-})
-
-afterAll(() => { disconnectServer() });
-
-describe('Register suite', () => {
+describe.serial('Register suite', async () => {
 
   it("should register and login successfully", async () => {
     let res = await sendMessage(
@@ -28,10 +20,21 @@ describe('Register suite', () => {
     expect(res.status).toEqual("200")
     expect(res.token).toBeString()
 
-    res = await sendMessage(deleteOwnUser(res.token))
+    res = await sendMessage(listOwnUser(res.token))
 
     expect(res.status).toEqual("200")
-    expect(res.token).toBeEmpty()
+    expect(res.usuario).toEqual("strauss")
+  })
+
+  it("could not register", async () => {
+    const res = await sendMessage(
+      createUser({
+        nome: "user",
+        senha: "every"
+      })
+    )
+
+    expect(res.status).toEqual("409")
   })
 
 })
