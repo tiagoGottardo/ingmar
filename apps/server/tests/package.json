@@ -2,6 +2,9 @@
   "name": "tests",
   "type": "module",
   "private": true,
+  "scripts": {
+    "test:server": "./run.sh"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
