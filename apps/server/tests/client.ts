@@ -1,54 +1,44 @@
 import net from "net"
 
-let client: net.Socket | null = null
-
 export const connectToServer = (address: string, port: number): Promise<net.Socket> => {
   return new Promise((resolve, reject) => {
-    if (client && !client.destroyed && client.readyState === "open")
-      return resolve(client)
+    const client = new net.Socket()
 
+    client.connect(port, address, () => resolve(client))
 
-    client = new net.Socket()
-
-    client.connect(port, address, () => {
-      console.log(`🔌 Connecting to ${address}:${port}`)
-      resolve(client!)
-    })
-
-    client.on("error", (err) => {
+    client.once("error", (err) => {
       console.error("Connection error:", err.message)
       reject(err)
     })
 
-    client.on("close", () => {
-      client = null
-    })
   })
 }
 
-export const getClient = (): net.Socket | null => client
-
-export const disconnectServer = (): void => {
+export const disconnectServer = (client: net.Socket): void => {
   if (client && !client.destroyed) {
     client.end()
     client.destroy()
-    client = null
   }
-  console.log("🧹 Disconnecting from server")
 }
 
-export const sendMessage = (message: any): Promise<any> => {
+export const sendMessage = (client: net.Socket, message: any): Promise<any> => {
   return new Promise((resolve, reject) => {
-    if (!getClient()) return reject(new Error("Not connected to server."))
+    if (!client || client.destroyed)
+      return reject(new Error("Not connected to server."))
 
-    getClient()?.once("data", (data) => {
+    const resolveHandler = (data: Buffer) => {
+      client.removeListener("error", rejectHandler)
       resolve(JSON.parse(data.toString()))
-    })
+    }
 
-    getClient()?.once("error", (err) => {
+    const rejectHandler = (err: Error) => {
+      client.removeListener("data", resolveHandler)
       reject(err)
-    })
+    }
 
-    getClient()?.write(JSON.stringify(message) + "\n")
+    client.once("data", resolveHandler)
+    client.once("error", rejectHandler)
+
+    client.write(JSON.stringify(message) + "\n")
   })
 }
