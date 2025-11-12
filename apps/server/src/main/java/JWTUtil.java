@@ -7,12 +7,12 @@ import java.util.Date;
 public class JWTUtil {
   private static final String SECRET_KEY = "N1NqQmpvclRkclhGYlV1TDFoM0JjVjZIeDB3MndqVVo=";
 
-  public static String generateToken(String id) {
+  public static String generateToken(int id) {
     return Jwts.builder()
-            .setSubject(id) 
-            .setIssuedAt(new Date(System.currentTimeMillis())) 
-            .signWith(SignatureAlgorithm.HS256, SECRET_KEY) 
-            .compact(); 
+        .claim("id", id)
+        .setIssuedAt(new Date(System.currentTimeMillis())) 
+        .signWith(SignatureAlgorithm.HS256, SECRET_KEY) 
+        .compact(); 
   }
 
   public static Claims validateToken(String token) {

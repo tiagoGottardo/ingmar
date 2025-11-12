@@ -6,7 +6,7 @@ class GetMovieById extends Operation {
   @Override
   public String run(Context ctx) {
 
-    Result<Movie> movieResult = MovieRepository.getMovieById(ctx.request.get("id_filme").asText());
+    Result<Movie> movieResult = MovieRepository.getMovieById(ctx.request.get("id_filme").asInt());
     if(movieResult.err != null) return movieResult.err;
 
     Movie movie = movieResult.value;

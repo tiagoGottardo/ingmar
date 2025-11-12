@@ -19,7 +19,7 @@ abstract class Operation {
     Claims claims = JWTUtil.validateToken(request.get("token").asText());
     if (claims == null) return Failed.response(401, "Token Inválido!");
 
-    Result<User> result = UserRepository.getUserById(claims.getSubject());
+    Result<User> result = UserRepository.getUserById(claims.get("id", Integer.class));
     if(result.err != null) return result.err;
 
     User user = result.value;

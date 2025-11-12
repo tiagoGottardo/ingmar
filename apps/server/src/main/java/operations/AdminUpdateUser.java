@@ -10,7 +10,7 @@ class AdminUpdateUser extends Operation {
   @Override
   public String run(Context ctx) {
     String newPassword = BCrypt.hashpw(ctx.request.get("usuario").get("senha").asText(), BCrypt.gensalt());
-    String userId = ctx.request.get("id").asText();
+    int userId = ctx.request.get("id").asInt();
 
     String err = UserRepository.updateUserPassword(userId, newPassword);
     if (err != null) return err;

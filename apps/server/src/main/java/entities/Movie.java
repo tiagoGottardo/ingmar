@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
@@ -9,7 +8,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Movie {
-  public String id;
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  public int id;
 
   @JsonProperty("titulo")
   public String title;
@@ -18,7 +18,8 @@ class Movie {
   public String director;
 
   @JsonProperty("ano")
-  public String year;
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  public int year;
 
   @JsonProperty("genero")
   public String[] genre;
@@ -42,12 +43,24 @@ class Movie {
 
   @JsonIgnore
   public void updateMovie(Movie other) {
-    if(other.id != null) this.id = other.id;
+    if(other.id != 0) this.id = other.id;
     if(other.title != null) this.title = other.title;
     if(other.director != null) this.director = other.director;
-    if(other.year != null) this.year = other.year;
+    if(other.year != 0) this.year = other.year;
     if(other.genre != null) this.genre = other.genre;
     if(other.synopsis != null) this.synopsis = other.synopsis;
+  }
+
+  @JsonProperty("nota")
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  public float getRating() {
+    return 0;
+  }
+
+  @JsonProperty("qtd_avaliacoes")
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  public int getAmountOfRating() {
+    return 0;
   }
 
 }
