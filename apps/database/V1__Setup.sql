@@ -5,8 +5,8 @@ CREATE TABLE users (
   token VARCHAR(125)
 );
 
-INSERT INTO users (name, password, token) VALUES ('admin', '$2a$10$UdZCpphA6roE2oRH6RfDyeLuyzpSA6FK2PnsH0tqNMp5amp3u9qfG', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzYyMzA4MzMwfQ.pTx_6DINTzf95bhgtJVlfEJyzGU8UMlrtP6jBudbBLg');
-INSERT INTO users (name, password, token) VALUES ('user', '$2a$10$yrOT//xP6tRbz0TxK23mIegv9DosmEPx9tJ4ldKjX5lGCAvUebUUq', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzYyMzA4Mjk5fQ.JVmKy9Aw4LFOX_x6dNvoH7vLYa5WZahtw_QCVWzGq0U');
+INSERT INTO users (name, password, token) VALUES ('admin', '$2a$10$UdZCpphA6roE2oRH6RfDyeLuyzpSA6FK2PnsH0tqNMp5amp3u9qfG', 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzYyOTg3ODQ3fQ.t5EYAh7QMtDZkhkj0hS5eHjTXXJh6x-OZ70hyUTIqEU');
+INSERT INTO users (name, password, token) VALUES ('user', '$2a$10$yrOT//xP6tRbz0TxK23mIegv9DosmEPx9tJ4ldKjX5lGCAvUebUUq', 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiaWF0IjoxNzYyOTg3ODc4fQ.ksjQFddxL1_JcaYX_WcZI8agKClVVPpatntTlcRDvA0');
 
 CREATE TABLE movies (
   id SERIAL PRIMARY KEY,

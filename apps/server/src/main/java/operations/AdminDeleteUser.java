@@ -7,7 +7,7 @@ class AdminDeleteUser extends Operation {
 
   @Override
   public String run(Context ctx) {
-    String userId = ctx.request.get("id").asText();
+    int userId = ctx.request.get("id").asInt();
 
     String err = UserRepository.deleteUserById(userId);
     if (err != null) return err;

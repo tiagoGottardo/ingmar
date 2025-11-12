@@ -29,13 +29,13 @@ class UserRepository {
     }
   }
 
-  public static String updateUserToken(String id, String token) {
+  public static String updateUserToken(int id, String token) {
     try (Connection conn = Database.getInstance().getConnection()) {
 
       PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET token = ? WHERE id = ?;");
 
       pstmt.setString(1, token);
-      pstmt.setInt(2, Integer.parseInt(id));
+      pstmt.setInt(2, id);
 
       pstmt.executeUpdate();
 
@@ -51,12 +51,12 @@ class UserRepository {
     }
   }
 
-  public static String removeUserToken(String id) {
+  public static String removeUserToken(int id) {
     try (Connection conn = Database.getInstance().getConnection()) {
 
       PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET token = NULL WHERE id = ?;");
 
-      pstmt.setInt(1, Integer.parseInt(id));
+      pstmt.setInt(1, id);
 
       pstmt.executeUpdate();
 
@@ -81,7 +81,7 @@ class UserRepository {
       try (ResultSet rs = pstmt.executeQuery()) {
         if (!rs.next()) return new Result(Failed.response(404));
 
-        String id = rs.getString("id");
+        int id = rs.getInt("id");
         String password = rs.getString("password");
         String token = rs.getString("token");
 
@@ -106,7 +106,7 @@ class UserRepository {
         int id = rs.getInt("id");
         String name = rs.getString("name");
 
-        users.add(new User(String.valueOf(id), name));
+        users.add(new User(id, name));
       }
 
       return new Result<List<User>>(users);
@@ -117,11 +117,11 @@ class UserRepository {
     }
   }
 
-  static public Result<User> getUserById(String id) {
+  static public Result<User> getUserById(int id) {
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
 
-      pstmt.setInt(1, Integer.parseInt(id));
+      pstmt.setInt(1, id);
 
       try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -140,8 +140,7 @@ class UserRepository {
     }
   }
 
-  static public String deleteUserById(String strId) {
-    int id = Integer.parseInt(strId);
+  static public String deleteUserById(int id) {
 
     if(id == 1) return Failed.response(403);
 
@@ -161,9 +160,7 @@ class UserRepository {
     }
   }
 
-  static public String updateUserPassword(String strId, String newPassword) {
-    int id = Integer.parseInt(strId);
-
+  static public String updateUserPassword(int id, String newPassword) {
     if(id == 1) return Failed.response(403);
 
     try (Connection conn = Database.getInstance().getConnection();

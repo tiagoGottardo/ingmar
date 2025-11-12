@@ -5,7 +5,6 @@ import java.util.List;
 class MovieRepository {
 
   public static String createMovie (Movie movie) {
-    int movieYear = Integer.parseInt(movie.year);
 
     try (Connection conn = Database.getInstance().getConnection()) {
 
@@ -13,7 +12,7 @@ class MovieRepository {
 
       pstmt.setString(1, movie.title);
       pstmt.setString(2, movie.director);
-      pstmt.setInt(3, movieYear);
+      pstmt.setInt(3, movie.year);
       pstmt.setArray(4, conn.createArrayOf("TEXT", movie.genre));
       pstmt.setString(5, movie.synopsis);
 
@@ -28,23 +27,18 @@ class MovieRepository {
   }
 
   static public String updateMovie(Movie movie) {
-    if(movie.id == null) { 
-      return Failed.response(500);
-    }
-
-    int id = Integer.parseInt(movie.id);
-    int year = Integer.parseInt(movie.year);
+    if(movie.id == 0)  return Failed.response(500);
 
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("UPDATE movies SET title = ?, director = ?, year = ?, genre = ?, synopsis = ? WHERE id = ?")) {
 
       pstmt.setString(1, movie.title);
       pstmt.setString(2, movie.director);
-      pstmt.setInt(3, year);
+      pstmt.setInt(3, movie.year);
       pstmt.setArray(4, conn.createArrayOf("TEXT", movie.genre));
       pstmt.setString(5, movie.synopsis);
 
-      pstmt.setInt(6, id);
+      pstmt.setInt(6, movie.id);
 
       int rowsAffected = pstmt.executeUpdate();
       if (rowsAffected == 0) return Failed.response(404); 
@@ -56,20 +50,20 @@ class MovieRepository {
     }
   }
   
-  static public Result<Movie> getMovieById(String id) {
+  static public Result<Movie> getMovieById(int id) {
     Movie movie = new Movie();
 
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM movies WHERE id = ?")) {
 
-      pstmt.setInt(1, Integer.parseInt(id));
+      pstmt.setInt(1, id);
 
       try (ResultSet rs = pstmt.executeQuery()) {
         if (!rs.next()) return new Result(Failed.response(404));
 
         movie.title = rs.getString("title");
         movie.director = rs.getString("director");
-        movie.year = String.valueOf(rs.getInt("year"));
+        movie.year = rs.getInt("year");
         movie.synopsis = rs.getString("synopsis");
 
         Array genreArray = rs.getArray("genre");
@@ -95,10 +89,10 @@ class MovieRepository {
       while (rs.next()) {
         Movie movie = new Movie();
 
-        movie.id = String.valueOf(rs.getInt("id"));
+        movie.id = rs.getInt("id");
         movie.title = rs.getString("title");
         movie.director = rs.getString("director");
-        movie.year = String.valueOf(rs.getInt("year"));
+        movie.year = rs.getInt("year");
         movie.synopsis = rs.getString("synopsis");
 
         Array genreArray = rs.getArray("genre");
@@ -118,8 +112,7 @@ class MovieRepository {
     }
   }
 
-  static public String deleteMovieById(String strId) {
-    int id = Integer.parseInt(strId);
+  static public String deleteMovieById(int id) {
 
     try (Connection conn = Database.getInstance().getConnection();
       PreparedStatement pstmt = conn.prepareStatement("DELETE FROM movies WHERE id = ?")) {

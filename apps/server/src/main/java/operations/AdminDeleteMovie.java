@@ -7,7 +7,7 @@ class AdminDeleteMovie extends Operation {
 
   @Override
   public String run(Context ctx) {
-    String movieId = ctx.request.get("id").asText();
+    int movieId = ctx.request.get("id").asInt();
 
     String err = MovieRepository.deleteMovieById(movieId);
     if (err != null) return err;
