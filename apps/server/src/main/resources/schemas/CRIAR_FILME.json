@@ -39,7 +39,7 @@
           "uniqueItems": true,
           "items": {
             "type": "string",
-            "enum": ["Ação", "Comédia", "Drama", "Terror", "Ficção"],
+            "enum": ["Ação", "Aventura", "Comédia", "Drama", "Fantasia", "Ficção Científica", "Terror", "Romance", "Documentário", "Musical", "Animação"],
             "message": {
               "type": "Cada gênero deve ser uma string.",
               "enum": "Cada gênero deve ser um dos valores permitidos: Ação, Aventura, Comédia, Drama, Fantasia, Ficção Científica, Terror, Romance, Documentário,  Musical, Animação."
