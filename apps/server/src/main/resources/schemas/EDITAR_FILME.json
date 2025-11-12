@@ -13,52 +13,56 @@
         },
         "titulo": { 
           "type": "string",
+          "minLength": 3,
           "maxLength": 30,
           "message": {
             "type": "O título precisa ser uma string.",
-            "maxLength": "O nome precisa ter no máximo 20 caracteres."
+            "minLength": "O título precisa ter no mínimo 3 caracteres.",
+            "maxLength": "O título precisa ter no máximo 30 caracteres."
           }
         },
         "diretor": { 
           "type": "string",
+          "minLength": 3,
+          "maxLength": 30,
           "message": {
-            "type": "O diretor precisa ser uma string."
+            "type": "O diretor precisa ser uma string.",
+            "minLength": "O diretor precisa ter no mínimo 3 caracteres.",
+            "maxLength": "O diretor precisa ter no máximo 30 caracteres."
           }
         },
         "ano": { 
           "type": "integer",
-          "minimum": 0,
-          "maximum": 9999,
+          "pattern": "^[0-9]{3,4}$",
           "message": {
             "type": "O ano precisa ser um número não negativo válido.",
-            "minimum": "O ano precisa ser um número não negativo válido.",
-            "maximum": "O ano pode ter no máximo 4 dígitos."
+            "pattern": "O número deve ter entre 3 e 4 dígitos."
           }
         },
         "genero": {
           "type": "array",
           "minItems": 1,
+          "uniqueItems": true,
           "items": {
             "type": "string",
-            "minLength": 2,
+            "enum": ["Ação", "Comédia", "Drama", "Terror", "Ficção"],
             "message": {
               "type": "Cada gênero deve ser uma string.",
-              "minLength": "Cada gênero deve ter no mínimo 2 caracteres."
+              "enum": "Cada gênero deve ser um dos valores permitidos: Ação, Aventura, Comédia, Drama, Fantasia, Ficção Científica, Terror, Romance, Documentário,  Musical, Animação."
             }
           },
           "message": {
             "type": "O campo 'genero' deve ser uma lista.",
-            "minItems": "A lista de gêneros não pode estar vazia."
+            "minItems": "A lista de gêneros não pode estar vazia.",
+            "uniqueItems": "Os gêneros não podem se repetir."
           }
         },
         "sinopse": { 
           "type": "string",
-          "minLength": 2,
           "maxLength": 250,
           "message": {
             "type": "O diretor precisa ser uma string.",
-            "minLength": "A sinopse não pode conter mais que 250 caracteres.",
-            "maxLength": "A sinopse não pode conter menos que 2 caracteres."
+            "maxLength": "A sinopse não pode conter mais que 250 caracteres."
           }
         }
       },
