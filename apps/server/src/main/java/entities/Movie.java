@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
@@ -48,6 +47,18 @@ class Movie {
     if(other.year != null) this.year = other.year;
     if(other.genre != null) this.genre = other.genre;
     if(other.synopsis != null) this.synopsis = other.synopsis;
+  }
+
+  @JsonProperty("nota")
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  public float getRating() {
+    return 0;
+  }
+
+  @JsonProperty("qtd_avaliacoes")
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  public int getAmountOfRating() {
+    return 0;
   }
 
 }
