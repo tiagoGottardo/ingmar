@@ -2,14 +2,14 @@ const admin = {
   id: 1,
   nome: 'admin',
   senha: 'admin',
-  token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzYyMzA4MzMwfQ.pTx_6DINTzf95bhgtJVlfEJyzGU8UMlrtP6jBudbBLg'
+  token: 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzYyOTg3ODQ3fQ.t5EYAh7QMtDZkhkj0hS5eHjTXXJh6x-OZ70hyUTIqEU'
 }
 
 const user = {
   id: 2,
   nome: 'user',
   senha: 'user',
-  token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzYyMzA4Mjk5fQ.JVmKy9Aw4LFOX_x6dNvoH7vLYa5WZahtw_QCVWzGq0U'
+  token: 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiaWF0IjoxNzYyOTg3ODc4fQ.ksjQFddxL1_JcaYX_WcZI8agKClVVPpatntTlcRDvA0'
 }
 
 export const config = {
