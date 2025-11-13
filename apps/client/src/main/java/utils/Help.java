@@ -16,7 +16,7 @@ class Help {
     System.out.println("deletar-conta                     | Deleta a conta logada\n");
 
     System.out.println(" -- Filmes -- ");
-    System.out.println("listar-filmes                     | Mostra a lista de filmes\n\n");
+    System.out.println("listar-filmes                     | Mostra a lista de filmes");
     System.out.println("listar-filmes <gênero>            | Mostra a lista de filmes com filtro de gênero\n\n");
 
     System.out.println("Lista de comandos do administrador:\n");
