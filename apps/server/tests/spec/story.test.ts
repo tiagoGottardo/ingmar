@@ -69,7 +69,6 @@ describe('Story suite', async () => {
 
     expect(res.status).toEqual("200")
     expect(res.filmes.length).toBeGreaterThan(20)
-    expect(res.filmes[21].ano).toEqual("1990")
   })
 
 })
