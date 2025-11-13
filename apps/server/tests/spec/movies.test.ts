@@ -154,4 +154,16 @@ describe('Movie suite', async () => {
     expect(res.filmes[0].qtd_avaliacoes).toEqual("0")
   })
 
+  it("should could not delete movie", async () => {
+    let res = await sendMessage(client, m.deleteMovie(admin.token, "100000000"))
+
+    expect(res.status).toEqual("404")
+  })
+
+  it("should delete movie", async () => {
+    let res = await sendMessage(client, m.deleteMovie(admin.token, "1"))
+
+    expect(res.status).toEqual("200")
+  })
+
 })
