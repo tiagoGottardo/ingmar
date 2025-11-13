@@ -20,12 +20,12 @@ public class Login extends Operation {
   public String run(Context ctx) {
     Result<User> result = UserRepository.getUserByName(ctx.request.get("usuario").asText());
     if (result.err != null)
-      return Failed.response(401);
+      return Failed.response(403);
 
     User user = result.value;
 
     if (!BCrypt.checkpw(ctx.request.get("senha").asText(), user.password))
-      return Failed.response(401);
+      return Failed.response(403);
 
     if (user.token != null)
       return new Success(user.token).toJson();
