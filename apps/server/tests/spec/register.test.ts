@@ -30,7 +30,42 @@ describe.serial('Register suite', async () => {
     expect(res.usuario).toEqual("strauss")
   })
 
-  it("could not register", async () => {
+  it("could not register by bad request", async () => {
+    const res = await sendMessage(
+      client,
+      createUser({
+        nome: "u",
+        senha: "e"
+      })
+    )
+
+    expect(res.status).toEqual("400")
+  })
+
+  it("could not register by bad request", async () => {
+    const res = await sendMessage(
+      client,
+      createUser({
+        nome: "uasdfasd",
+      })
+    )
+
+    expect(res.status).toEqual("400")
+  })
+
+  it("could not register by bad request", async () => {
+    const res = await sendMessage(
+      client,
+      createUser({
+        nome: "uasdfasdalskjfahsdlfkjashdflaskdjfhalsdfkjahsdflkj",
+        senha: "uasdfasd",
+      })
+    )
+
+    expect(res.status).toEqual("400")
+  })
+
+  it("could not register user with the same name", async () => {
     const res = await sendMessage(
       client,
       createUser({

@@ -30,7 +30,7 @@
           "pattern": "^[0-9]{3,4}$",
           "message": {
             "type": "O ano precisa ser um número não negativo válido.",
-            "pattern": "O número deve ter entre 3 e 4 dígitos."
+            "pattern": "O ano deve ser um número válido com 3 ou 4 dígitos."
           }
         },
         "genero": {

@@ -31,7 +31,7 @@ describe('Login suite', async () => {
   it("should could not login ", async () => {
     const res = await sendMessage(client, login("tiaguines", "tiaguines"))
 
-    expect(res.status).toEqual("401")
+    expect(res.status).toEqual("403")
     expect(res.token).toBeEmpty()
   })
 
