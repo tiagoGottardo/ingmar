@@ -27,13 +27,3 @@ De forma semelhante pode rodar:
 ```sh
 ./gradlew :apps:client:run
 ```
-
-## Funcionalidades
-
-- Criar usuário
-- Realizar Login
-- Realizar Logout
-- Deletar usuário
-- Atualizar nome ou senha do usuário
-- Ver dados do usuário logado
-- Uso de JWT
